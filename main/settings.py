@@ -25,8 +25,8 @@ SECRET_KEY = '91t95l-)%)5g5p*f%*=dj8htit0+8py%^hd@%!2_43d!#dl2qc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['g-f-django-bank-app.herokuapp.com']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['g-f-django-bank-app.herokuapp.com']
+# ALLOWED_HOSTS = []
 
 
 # Application definition
