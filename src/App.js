@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class App extends Component {
+
   constructor(props) {
     super(props);
+
     this.state = {
       activeAccount: {
+        id: "",
         account_name: "",
       },
       accountsList: []
@@ -35,11 +38,9 @@ class App extends Component {
         className="list-group-item d-flex justify-content-between align-items-center"
       >
         <span
-          className={`todo-title mr-2 ${
-            this.state.viewCompleted ? "completed-todo" : ""
-          }`}
+          className={`todo-title mr-2`}
         >
-          {account.name}
+          {account.account_name}
         </span>
       </li>
     ));
