@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework import routers
 from bank.bank_holders import viewsets as bank_views
 
@@ -12,5 +12,5 @@ router.register(r'products', bank_views.Product_Viewset)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', router.urls),
+    path('', include(router.urls)),
 ]
