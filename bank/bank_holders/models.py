@@ -17,7 +17,7 @@ class Customer(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name}: {self.branch.Branch}"
+        return f"{self.name}: {self.branch}"
 
 class Account(models.Model):
     name = models.CharField(max_length=30, default="")
