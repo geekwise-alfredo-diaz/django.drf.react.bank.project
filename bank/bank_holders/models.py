@@ -33,6 +33,7 @@ class Account(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=30)
+    email = models.CharField(max_length=300, default='Email@domain.setup')
     product_options = (
         ('savings', 'SAVINGS'),
         ('checking', 'CHECKING'),
