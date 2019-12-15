@@ -12,7 +12,8 @@ class Customer(models.Model):
     email = models.EmailField(max_length=300, default="")
     branch = models.ForeignKey(
         Branch,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        id=Branch.pk,
     )
 
     def __str__(self):
@@ -24,6 +25,7 @@ class Account(models.Model):
     holder = models.OneToOneField(
         Customer,
         on_delete=models.CASCADE,
+        id=Customer.pk,
     )
 
     def __str__(self):
