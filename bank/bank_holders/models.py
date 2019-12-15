@@ -13,6 +13,7 @@ class Customer(models.Model):
     branch = models.ForeignKey(
         Branch,
         on_delete=models.CASCADE,
+        null=True,
     )
 
     def __str__(self):
@@ -24,6 +25,7 @@ class Account(models.Model):
     holder = models.OneToOneField(
         Customer,
         on_delete=models.CASCADE,
+        null=True,
     )
 
     def __str__(self):
