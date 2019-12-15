@@ -12,7 +12,7 @@ class Account_Viewset(viewsets.ModelViewSet):
 
 class Customer_Viewset(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
-    serializer_class = Account_Serializer
+    serializer_class = Customer_Serializer
 
 class Product_Viewset(viewsets.ModelViewSet):
     queryset = Product.objects.all()
