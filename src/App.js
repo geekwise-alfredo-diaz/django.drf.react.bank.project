@@ -7,10 +7,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      activeAccount: {
-        id: "",
-        account_name: "",
-      },
       accountsList: []
     };
   }
