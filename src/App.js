@@ -7,36 +7,36 @@ class App extends Component {
     super(props);
 
     this.state = {
-      accountsList: []
+      customersList: []
     };
   }
 
-  // Refresh accounts the moment component loads
+  // Refresh customers the moment component loads
   componentDidMount() {
     this.refreshList();
   }
 
-  // Gets accounts from db
+  // Gets customers from db
   refreshList = () => {
     axios
-      .get("https://g-f-django-bank-app.herokuapp.com/accounts/")
-      .then(res => this.setState({ accountsList: res.data }))
+      .get("https://g-f-django-bank-app.herokuapp.com/customers/")
+      .then(res => this.setState({ customersList: res.data }))
       .catch(err => console.log(err));
   };
 
-  // Renders accounts
-  renderAccounts = () => {
-    let accounts = this.state.accountsList;
+  // Renders customers
+  rendercustomers = () => {
+    let customers = this.state.customersList;
 
-    return accounts.map(account => (
+    return customers.map(customer => (
       <li
-        key={account.id}
+        key={customer.id}
         className="list-group-item d-flex justify-content-between align-items-center"
       >
         <span
           className={`todo-title mr-2`}
         >
-          {account.account_name}
+          {customer.name}
         </span>
       </li>
     ));
@@ -50,7 +50,7 @@ class App extends Component {
           <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="card p-3">
               <ul className="list-group list-group-flush">
-                {this.renderAccounts()}
+                {this.rendercustomers()}
               </ul>
             </div>
           </div>
