@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+let CancelToken = axios.CancelToken
 
 export class Customers extends Component {
 
@@ -14,10 +15,16 @@ export class Customers extends Component {
   
     // Gets customers from db
     refreshList = () => {
-      axios
-        .get("https://g-f-django-bank-app.herokuapp.com/customers/")
-        .then(res => this.setState({ customersList: res.data }))
-        .catch(err => console.log(err));
+        let cancel
+        let cancelToken = new CancelToken(function executor(c) {
+            cancel = c;
+          })
+        axios.get('https://g-f-django-bank-app.herokuapp.com/customers/', {
+            cancelToken: cancelToken
+        })
+        .then(res => this.setState({customersList: res.data}))
+        .catch(err => console.log(err))
+        // cancel()
     };
   
     // Renders customers

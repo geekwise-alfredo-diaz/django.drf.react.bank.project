@@ -1,9 +1,47 @@
-import React from 'react'
+import React, { Component } from 'react'
+import axios from 'axios'
+let CancelToken = axios.CancelToken;
 
-export default function Accounts() {
-    return (
-        <div>
-            Accounts
-        </div>
-    )
+export class Accounts extends Component {
+    state = {
+        accountsList: [],
+    }
+
+    componentDidMount() {
+        this.refreshAccounts()
+    }
+
+
+    refreshAccounts = () => {
+        axios.get('https://g-f-django-bank-app.herokuapp.com/accounts/')
+        .then(res => this.setState({accountsList: res.data}))
+        .catch(err => console.log(err))
+    }
+
+    renderAccounts = () => {
+        this.state.accountsList.map(account => {
+            return (
+                <li
+                key={account.id}
+                className="list-group-item d-flex justify-content-between align-items-center"
+                >
+                    <span
+                      className={`todo-title mr-2`}
+                    >
+                      {account.name}
+                    </span>
+                </li>
+            )
+        })
+    }
+
+    render() {
+        return (
+            <div>
+                {this.renderAccounts()}
+            </div>
+        )
+    }
 }
+
+export default Accounts

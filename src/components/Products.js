@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+let CancelToken = axios.CancelToken;
 
 export class Products extends Component {
 
@@ -13,16 +14,30 @@ export class Products extends Component {
 
     // Gets products from db
     refreshProducts = () => {
-        axios.get('https://g-f-django-bank-app.herokuapp.com/branches/')
+        let cancel
+        let cancelToken = new CancelToken(function executor(c) {
+            cancel = c;
+          })
+        axios.get('https://g-f-django-bank-app.herokuapp.com/products/', {
+            cancelToken: cancelToken
+        })
         .then(res => this.setState({productsList: res.data}))
-        .catch(err => console.log(err));
+        .catch(err => console.log(err))
+        // cancel()
     }
 
     renderProducts = () => {
         return this.state.productsList.map(product => (
-            <div>
-                {product.name}
-            </div>
+            <li
+            key={product.id}
+            className="list-group-item d-flex justify-content-between align-items-center"
+            >
+                <span
+                  className={`todo-title mr-2`}
+                >
+                  {product.name}
+                </span>
+          </li>
         ))
     }
 

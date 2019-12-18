@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+let CancelToken = axios.CancelToken;
 
 export class Branches extends Component {
 
@@ -14,10 +15,16 @@ export class Branches extends Component {
   
     // Gets branches from db
     refreshList = () => {
-      axios
-        .get("https://g-f-django-bank-app.herokuapp.com/branches/")
-        .then(res => this.setState({ branchList: res.data }))
-        .catch(err => console.log(err));
+      let cancel
+      let cancelToken = new CancelToken(function executor(c) {
+          cancel = c;
+        })
+      axios.get('https://g-f-django-bank-app.herokuapp.com/branches/', {
+          cancelToken: cancelToken
+      })
+      .then(res => this.setState({branchList: res.data}))
+      .catch(err => console.log(err))
+      // cancel()
     };
   
     // Renders branches
