@@ -32,7 +32,8 @@ class Account(models.Model):
         return f"{self.name}: {self.holder}"
 
 class Product(models.Model):
-    
+    def __str__(self):
+        return 'Product'
     # name = models.CharField(max_length=30)
     # email = models.CharField(max_length=300, default='Email@domain.setup')
     # product_options = (
