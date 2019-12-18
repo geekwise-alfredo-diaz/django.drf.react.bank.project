@@ -43,7 +43,7 @@ class Product(models.Model):
     #     choices=product_options,
     #     default=product_options[0],
     # )
-        def __str__(self):
+    def __str__(self):
         return f"{self.name}"
 
 # Fields needing a default: balance, location, email
