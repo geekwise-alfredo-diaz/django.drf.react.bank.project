@@ -24,7 +24,7 @@ export class Accounts extends Component {
         axios.get('https://g-f-django-bank-app.herokuapp.com/accounts/', {
             cancelToken: cancelToken
         })
-        .then(res => this.setState({branchList: res.data}))
+        .then(res => this.setState({accountsList: res.data}))
         .catch(err => console.log(err))
     }
 
