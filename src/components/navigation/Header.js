@@ -10,11 +10,11 @@ export default function Header() {
           </button>
           <div  className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div  className="navbar-nav">
-              <Link to="/"><a  className="nav-item nav-link">Home <span  className="sr-only">(current)</span></a></Link>
-              <Link to="/branches"><a  className="nav-item nav-link">Branches</a></Link>
-              <Link to="/customers"><a  className="nav-item nav-link">Customers</a></Link>
-              <Link to="/accounts"><a  className="nav-item nav-link" tabIndex="-1" aria-disabled="true">Accounts</a></Link>
-              <Link to="/products"><a  className="nav-item nav-link" tabIndex="-1" aria-disabled="true">Products</a></Link>
+              <Link to="/"><div  className="nav-item nav-link">Home <span  className="sr-only">(current)</span></div></Link>
+              <Link to="/branches"><div  className="nav-item nav-link">Branches</div></Link>
+              <Link to="/customers"><div  className="nav-item nav-link">Customers</div></Link>
+              <Link to="/accounts"><div  className="nav-item nav-link">Accounts</div></Link>
+              <Link to="/products"><div  className="nav-item nav-link">Products</div></Link>
             </div>
           </div>
         </nav>
