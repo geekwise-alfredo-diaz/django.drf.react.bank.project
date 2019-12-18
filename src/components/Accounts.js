@@ -24,13 +24,15 @@ export class Accounts extends Component {
         axios.get('https://g-f-django-bank-app.herokuapp.com/accounts/', {
             cancelToken: cancelToken
         })
-        .then(res => this.setState({accountsList: res.data}))
+        .then(res => {this.setState({accountsList: res.data})
+        })
         .catch(err => console.log(err))
     }
 
     renderAccounts = () => {
-        this.state.accountsList.map(account => {
-            return (
+        let accountsList = this.state.accountsList
+        
+        return accountsList.map(account => (
                 <li
                 key={account.id}
                 className="list-group-item d-flex justify-content-between align-items-center"
@@ -41,9 +43,9 @@ export class Accounts extends Component {
                       {account.name}
                     </span>
                 </li>
-            )
-        })
-    }
+            
+        ));
+    };
 
     render() {
         return (
