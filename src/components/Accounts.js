@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 let CancelToken = axios.CancelToken;
+let cancel;
 
 export class Accounts extends Component {
     state = {
@@ -11,10 +12,19 @@ export class Accounts extends Component {
         this.refreshAccounts()
     }
 
+    componentWillUnmount() {
+        cancel();
+    }
+
 
     refreshAccounts = () => {
-        axios.get('https://g-f-django-bank-app.herokuapp.com/accounts/')
-        .then(res => this.setState({accountsList: res.data}))
+        let cancelToken = new CancelToken(function executor(c) {
+            cancel = c;
+          })
+        axios.get('https://g-f-django-bank-app.herokuapp.com/accounts/', {
+            cancelToken: cancelToken
+        })
+        .then(res => this.setState({branchList: res.data}))
         .catch(err => console.log(err))
     }
 

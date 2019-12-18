@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 let CancelToken = axios.CancelToken;
+let cancel;
 
 export class Branches extends Component {
 
@@ -12,10 +13,13 @@ export class Branches extends Component {
     componentDidMount() {
       this.refreshList();
     }
+
+    componentWillUnmount() {
+      cancel();
+    }
   
     // Gets branches from db
     refreshList = () => {
-      let cancel
       let cancelToken = new CancelToken(function executor(c) {
           cancel = c;
         })
@@ -24,7 +28,6 @@ export class Branches extends Component {
       })
       .then(res => this.setState({branchList: res.data}))
       .catch(err => console.log(err))
-      // cancel()
     };
   
     // Renders branches

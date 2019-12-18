@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 let CancelToken = axios.CancelToken;
+let cancel;
 
 export class Products extends Component {
 
@@ -12,9 +13,12 @@ export class Products extends Component {
         this.refreshProducts();
     }
 
+    componentWillUnmount() {
+        cancel();
+    }
+
     // Gets products from db
     refreshProducts = () => {
-        let cancel
         let cancelToken = new CancelToken(function executor(c) {
             cancel = c;
           })
@@ -23,7 +27,6 @@ export class Products extends Component {
         })
         .then(res => this.setState({productsList: res.data}))
         .catch(err => console.log(err))
-        // cancel()
     }
 
     renderProducts = () => {
