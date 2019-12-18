@@ -18,5 +18,5 @@ class Customer_Serializer(serializers.HyperlinkedModelSerializer):
 
 class Product_Serializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        fields = ['id','name']
+        fields = ['id']
         model = Product
