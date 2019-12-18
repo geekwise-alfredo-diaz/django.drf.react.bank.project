@@ -34,15 +34,15 @@ class Account(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=30)
     email = models.CharField(max_length=300, default='Email@domain.setup')
-    product_options = (
-        ('savings', 'SAVINGS'),
-        ('checking', 'CHECKING'),
-    )
-    product_options = models.CharField(
-        max_length=30,
-        choices=product_options,
-        default=product_options[0],
-    )
+    # product_options = (
+    #     ('savings', 'SAVINGS'),
+    #     ('checking', 'CHECKING'),
+    # )
+    # product_options = models.CharField(
+    #     max_length=30,
+    #     choices=product_options,
+    #     default=product_options[0],
+    # )
 
     def __str__(self):
         return f"{self.name}: {self.product_options}"
