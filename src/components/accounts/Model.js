@@ -3,8 +3,13 @@ import React, { Component } from 'react'
 export class Model extends Component {
     render() {
         return (
-            <li class="list-group-item">
-                {this.props.account.name}
+            <li className="list-group-item">
+                <div>
+                    {this.props.account.name}
+                </div>
+                <button className="btn-primary" onClick={this.deleteAccount}>
+                    Test
+                </button>
             </li>
         )
     }
