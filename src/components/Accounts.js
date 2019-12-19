@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { Component } from 'react';
+import axios from 'axios';
+import Model from './accounts/Model';
+
 let CancelToken = axios.CancelToken;
 let cancel;
 
@@ -33,17 +35,7 @@ export class Accounts extends Component {
         let accountsList = this.state.accountsList
         
         return accountsList.map(account => (
-                <li
-                key={account.id}
-                className="list-group-item d-flex justify-content-between align-items-center"
-                >
-                    <span
-                      className={`todo-title mr-2`}
-                    >
-                      {account.name}
-                    </span>
-                </li>
-            
+            <Model key={account.id} account={account}/>
         ));
     };
 
