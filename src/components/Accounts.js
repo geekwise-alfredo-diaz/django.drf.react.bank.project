@@ -10,6 +10,14 @@ export class Accounts extends Component {
         accountsList: [],
     }
 
+    deleteAccount = (index)=> {
+        index = this.props.account.id;
+        axios.delete(`https://g-f-django-bank-app.herokuapp.com/accounts/${index}`)
+        .then(res => this.setState({accountsList: this.state.accountsList.filter(
+            account => account.id !== index
+        )}))
+    }
+
     componentDidMount() {
         this.refreshAccounts()
     }
