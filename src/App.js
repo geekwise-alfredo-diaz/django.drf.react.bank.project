@@ -4,6 +4,7 @@ import Branches from './components/Branches';
 import Accounts from './components/Accounts';
 import Customers from './components/Customers';
 import Products from './components/Products';
+import Home from './components/navigation/Home';
 import Header from './components/navigation/Header'
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
 
         <Header />
         
+        <Route exact path="/" component={Home}/>
         <Route path="/branches" component={Branches}/>
         <Route path="/accounts" component={Accounts}/>
         <Route path="/customers" component={Customers}/>
