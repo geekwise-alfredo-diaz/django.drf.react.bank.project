@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Model from './accounts/Model';
+import AddAccount from './accounts/AddAccount'
 
 let CancelToken = axios.CancelToken;
 let cancel;
@@ -10,12 +11,21 @@ export class Accounts extends Component {
         accountsList: [],
     }
 
-    deleteAccount = (index)=> {
-        index = this.props.account.id;
-        axios.delete(`https://g-f-django-bank-app.herokuapp.com/accounts/${index}`)
+    deleteAccount = (accountId)=> {
+        // console.log(acc)
+        axios.delete(`https://g-f-django-bank-app.herokuapp.com/accounts/${accountId}/`)
         .then(res => this.setState({accountsList: this.state.accountsList.filter(
-            account => account.id !== index
+            account => account.id !== accountId
         )}))
+        console.log('Del');
+    }
+    
+    addAccount = (submitText)=> {
+        axios.post('https://g-f-django-bank-app.herokuapp.com/accounts/',
+        {
+            name: submitText
+        }).then(res => this.refreshAccounts())
+        .catch(err => console.log(err));
     }
 
     componentDidMount() {
@@ -43,14 +53,22 @@ export class Accounts extends Component {
         let accountsList = this.state.accountsList
         
         return accountsList.map(account => (
-            <Model key={account.id} account={account}/>
+            <Model deleteAccount={this.deleteAccount} key={account.id} account={account}/>
         ));
     };
 
     render() {
         return (
             <div>
-                {this.renderAccounts()}
+                <div>
+                    {this.renderAccounts()}
+                </div>
+                <div>
+                    <AddAccount
+                        addAccount={this.addAccount}
+                    />
+                </div>
+                
             </div>
         )
     }
