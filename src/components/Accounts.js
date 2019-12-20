@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Model from './accounts/Model';
-import AddAccount from './accounts/AddAccount'
+import Model from './Model';
+import AddItem from './AddItem'
 
 let CancelToken = axios.CancelToken;
 let cancel;
@@ -17,7 +17,6 @@ export class Accounts extends Component {
         .then(res => this.setState({accountsList: this.state.accountsList.filter(
             account => account.id !== accountId
         )}))
-        console.log('Del');
     }
     
     addAccount = (submitText)=> {
@@ -53,7 +52,7 @@ export class Accounts extends Component {
         let accountsList = this.state.accountsList
         
         return accountsList.map(account => (
-            <Model deleteAccount={this.deleteAccount} key={account.id} account={account}/>
+            <Model deleteItem={this.deleteAccount} key={account.id} item={account}/>
         ));
     };
 
@@ -61,8 +60,8 @@ export class Accounts extends Component {
         return (
             <div>
                 <div>
-                    <AddAccount
-                        addAccount={this.addAccount}
+                    <AddItem 
+                    placeholder={"Account's name"} addItem={this.addAccount}
                     />
                 </div>
                 <div>

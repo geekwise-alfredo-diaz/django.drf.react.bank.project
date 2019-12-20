@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 
 import Model from './Model'
+import AddItem from './AddItem'
 
 let CancelToken = axios.CancelToken;
 let cancel;
@@ -22,6 +23,10 @@ export class Customers extends Component {
     }
 
     deleteCustomer = (e)=> {
+      console.log(e)
+    }
+
+    addCustomer = (e)=> {
       console.log(e)
     }
   
@@ -49,6 +54,7 @@ export class Customers extends Component {
     render() {
         return (
             <div>
+                <AddItem placeholder={"Holder's name"} addItem={this.addCustomer}/>
                 {this.renderCustomers()}
             </div>
         )
