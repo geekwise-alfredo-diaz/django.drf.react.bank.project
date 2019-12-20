@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+
+import Model from './Model';
+import AddItem from './AddItem';
+
 let CancelToken = axios.CancelToken;
 let cancel;
 
@@ -17,6 +21,14 @@ export class Products extends Component {
         cancel();
     }
 
+    deleteProducts = (e)=> {
+        console.log(e);
+    }
+    
+    addProducts = (e)=> {
+        console.log(e);
+    }
+
     // Gets products from db
     refreshProducts = () => {
         let cancelToken = new CancelToken(function executor(c) {
@@ -31,22 +43,19 @@ export class Products extends Component {
 
     renderProducts = () => {
         return this.state.productsList.map(product => (
-            <li
-            key={product.id}
-            className="list-group-item d-flex justify-content-between align-items-center"
-            >
-                <span
-                  className={`todo-title mr-2`}
-                >
-                  {product.name}
-                </span>
-          </li>
+            <Model 
+                deleteItem={this.deleteProducts}
+                item={product} key={product.id}
+            />
         ))
     }
 
     render() {
         return (
             <div>
+                <AddItem addItem={this.addProducts}
+                placeholder={"Product's name"}
+                />
                 {this.renderProducts()}
             </div>
         )

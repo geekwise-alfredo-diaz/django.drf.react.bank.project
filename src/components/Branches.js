@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+
+import Model from './Model';
+import AddItem from './AddItem';
+
 let CancelToken = axios.CancelToken;
 let cancel;
 
@@ -16,6 +20,14 @@ export class Branches extends Component {
 
     componentWillUnmount() {
       cancel();
+    }
+
+    deleteItem = (e)=> {
+      console.log(e);
+    }
+
+    addItem = (e)=> {
+      console.log(e);
     }
   
     // Gets branches from db
@@ -35,22 +47,14 @@ export class Branches extends Component {
       let branches = this.state.branchList;
   
       return branches.map(customer => (
-        <li
-          key={customer.id}
-          className="list-group-item d-flex justify-content-between align-items-center"
-        >
-          <span
-            className={`todo-title mr-2`}
-          >
-            {customer.name}
-          </span>
-        </li>
+        <Model deleteItem={this.deleteItem} key={customer.id} item={customer}/>
       ));
     };
 
     render() {
         return (
             <div>
+                <AddItem addItem={this.addItem} placeholder={'Branch name'}/>
                 {this.renderBranches()}
             </div>
         )
