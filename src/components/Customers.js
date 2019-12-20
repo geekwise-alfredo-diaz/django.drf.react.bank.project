@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+
+import Model from './Model'
+
 let CancelToken = axios.CancelToken;
 let cancel;
 
@@ -16,6 +19,10 @@ export class Customers extends Component {
 
     componentWillUnmount() {
       cancel();
+    }
+
+    deleteCustomer = (e)=> {
+      console.log(e)
     }
   
     // Gets customers from db
@@ -35,16 +42,7 @@ export class Customers extends Component {
       let customers = this.state.customersList;
   
       return customers.map(customer => (
-        <li
-          key={customer.id}
-          className="list-group-item d-flex justify-content-between align-items-center"
-        >
-          <span
-            className={`todo-title mr-2`}
-          >
-            {customer.name}
-          </span>
-        </li>
+        <Model deleteItem={this.deleteCustomer} key={customer.id} item={customer}/>
       ));
     };
 
