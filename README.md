@@ -1,14 +1,14 @@
 # Bank Project
 
-Bank project using Django and React deployed via Heroku
-[Frontend]()
-[Backend]()
+Bank project using Django and React deployed via Heroku<br>
+[Frontend](https://g-f-react-bank-app.herokuapp.com)<br>
+[Backend](https://g-f-django-bank-app.herokuapp.com)
 
 ## Built With
 
-* [React](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Django](https://maven.apache.org/) - Dependency Management
-* [Heroku](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [React](https://reactjs.org/) - The web framework used
+* [Django](https://www.djangoproject.com/) - Backend framework used
+* [Heroku](https://www.heroku.com/) - Deployment
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
