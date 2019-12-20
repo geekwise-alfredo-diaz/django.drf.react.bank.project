@@ -23,7 +23,7 @@ export default class Header extends React.Component {
             <Link style={this.linkStyle} to="/branches">Branches</Link>
           </Nav.Item>
           <Nav.Item>
-            <Link style={this.linkStyle} to="/customers">Customers</Link>
+            <Link style={this.linkStyle} to="/holders">Holders</Link>
           </Nav.Item>
           <Nav.Item>
             <Link style={this.linkStyle} to="/accounts">Accounts</Link>
