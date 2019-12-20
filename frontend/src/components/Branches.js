@@ -46,8 +46,8 @@ export class Branches extends Component {
     renderBranches = () => {
       let branches = this.state.branchList;
   
-      return branches.map(customer => (
-        <Model deleteItem={this.deleteItem} key={customer.id} item={customer}/>
+      return branches.map(branch => (
+        <Model deleteItem={this.deleteItem} key={branch.id} item={branch}/>
       ));
     };
 
