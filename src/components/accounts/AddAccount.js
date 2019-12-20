@@ -21,7 +21,7 @@ export class AddAccount extends Component {
               <div className="input-group-prepend">
                 <input type="submit" className="input-group-text" id="addon-wrapping"/>
               </div>
-              <input name="submit" onChange={this.updateName} value={this.state.name} type="text" className="form-control" placeholder="Username"/>
+              <input name="submit" onChange={this.updateName} value={this.state.name} type="text" className="form-control" placeholder="Account"/>
             </form>
         )
     }
