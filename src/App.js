@@ -1,65 +1,29 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Branches from './components/Branches';
+import Accounts from './components/Accounts';
+import Customers from './components/Customers';
+import Products from './components/Products';
+import Home from './components/navigation/Home';
+import Header from './components/navigation/Header'
 
 class App extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      activeAccount: {
-        id: "",
-        account_name: "",
-      },
-      accountsList: []
-    };
-  }
-
-  // Refresh accounts the moment component loads
-  componentDidMount() {
-    this.refreshList();
-  }
-
-  // Gets accounts from db
-  refreshList = () => {
-    axios
-      .get("https://g-f-django-bank-app.herokuapp.com/accounts/")
-      .then(res => this.setState({ accountsList: res.data }))
-      .catch(err => console.log(err));
-  };
-
-  // Renders accounts
-  renderAccounts = () => {
-    let accounts = this.state.accountsList;
-
-    return accounts.map(account => (
-      <li
-        key={account.id}
-        className="list-group-item d-flex justify-content-between align-items-center"
-      >
-        <span
-          className={`todo-title mr-2`}
-        >
-          {account.account_name}
-        </span>
-      </li>
-    ));
-  };
+  
 
   render() {
     return (
-      <main className="content">
-        <h1 className="text-white text-uppercase text-center my-4">Bank App</h1>
-        <div className="row ">
-          <div className="col-md-6 col-sm-10 mx-auto p-0">
-            <div className="card p-3">
-              <ul className="list-group list-group-flush">
-                {this.renderAccounts()}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </main>
+      <Router>
+
+        <Header />
+        
+        <Route exact path="/" component={Home}/>
+        <Route path="/branches" component={Branches}/>
+        <Route path="/accounts" component={Accounts}/>
+        <Route path="/holders" component={Customers}/>
+        <Route path="/products" component={Products}/>
+
+
+      </Router>
     );
   }
 
