@@ -61,14 +61,13 @@ export class Accounts extends Component {
         return (
             <div>
                 <div>
-                    {this.renderAccounts()}
-                </div>
-                <div>
                     <AddAccount
                         addAccount={this.addAccount}
                     />
                 </div>
-                
+                <div>
+                    {this.renderAccounts()}
+                </div>
             </div>
         )
     }
