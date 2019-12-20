@@ -9,7 +9,7 @@ class Branch(models.Model):
 
 class Customer(models.Model):
     name = models.CharField(max_length=30)
-    # email = models.EmailField(max_length=300, default='domain@setup.com')
+    email = models.EmailField(max_length=300, default='domain@setup.com')
     branch = models.ForeignKey(
         Branch,
         on_delete=models.CASCADE,
