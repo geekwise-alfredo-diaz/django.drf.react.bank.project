@@ -21,12 +21,19 @@ export class Products extends Component {
         cancel();
     }
 
-    deleteProducts = (e)=> {
-        console.log(e);
+    deleteProducts = (productId)=> {
+        axios.delete(`https://g-f-django-bank-app.herokuapp.com/products/${productId}/`)
+        .then(res => this.setState({productsList: this.state.productsList.filter(
+            product => product.id !== productId
+        )}))
     }
     
-    addProducts = (e)=> {
-        console.log(e);
+    addProducts = (submitText)=> {
+        axios.post('https://g-f-django-bank-app.herokuapp.com/products/',
+        {
+            name: submitText
+        }).then(res => this.refreshProducts())
+        .catch(err => console.log(err));
     }
 
     // Gets products from db
