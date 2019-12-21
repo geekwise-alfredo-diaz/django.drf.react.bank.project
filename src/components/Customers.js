@@ -15,23 +15,30 @@ export class Customers extends Component {
   
     // Refresh customers the moment component loads
     componentDidMount() {
-      this.refreshList();
+      this.refreshCustomers();
     }
 
     componentWillUnmount() {
       cancel();
     }
 
-    deleteCustomer = (e)=> {
-      console.log(e)
+    deleteCustomer = (customerId)=> {
+      axios.delete(`https://g-f-django-bank-app.herokuapp.com/customers/${customerId}/`)
+      .then(res => this.setState({customersList: this.state.customersList.filter(
+          customer => customer.id !== customerId
+      )}))
     }
 
-    addCustomer = (e)=> {
-      console.log(e)
+    addCustomer = (submitText)=> {
+      axios.post('https://g-f-django-bank-app.herokuapp.com/customers/',
+      {
+          name: submitText
+      }).then(res => this.refreshCustomers())
+      .catch(err => console.log(err));
     }
   
     // Gets customers from db
-    refreshList = () => {
+    refreshCustomers = () => {
         let cancelToken = new CancelToken(function executor(c) {
             cancel = c;
           })
