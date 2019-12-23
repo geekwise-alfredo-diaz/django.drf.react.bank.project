@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Branch(models.Model):
     name = models.CharField(max_length=30)
@@ -14,6 +15,10 @@ class Customer(models.Model):
         Branch,
         on_delete=models.CASCADE,
         null=True,
+    )
+    customer = models.ForeignKey(User,
+    related_name='Customers', on_delete=models.CASCADE,
+    null=True,
     )
 
     def __str__(self):
