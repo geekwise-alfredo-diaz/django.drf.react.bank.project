@@ -12,16 +12,16 @@ class Account_Viewset(viewsets.ModelViewSet):
 
 class Customer_Viewset(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticated,
     ]
     serializer_class = Customer_Serializer
 
     def get_queryset(self):
-        return self.request.user.all()
+        return self.request.user.customers.all()
 
-    # Saves customer
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 
 class Product_Viewset(viewsets.ModelViewSet):
