@@ -1,57 +1,37 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
+import { getCustomers, deleteCustomer, addCustomer } from '../actions/customers';
 
 import Model from './Model'
 import AddItem from './AddItem'
 
-let CancelToken = axios.CancelToken;
-let cancel;
-
 export class Customers extends Component {
-
-    state = {
-        customersList: []
-    };
+    static propTypes = {
+      customers: PropTypes.array.isRequired,
+    }
   
     // Refresh customers the moment component loads
     componentDidMount() {
       this.refreshCustomers();
     }
 
-    componentWillUnmount() {
-      cancel();
-    }
-
     deleteCustomer = (customerId)=> {
-      axios.delete(`https://g-f-django-bank-app.herokuapp.com/customers/${customerId}/`)
-      .then(res => this.setState({customersList: this.state.customersList.filter(
-          customer => customer.id !== customerId
-      )}))
+      this.props.deleteCustomer(customerId);
     }
 
     addCustomer = (submitText)=> {
-      axios.post('https://g-f-django-bank-app.herokuapp.com/customers/',
-      {
-          name: submitText
-      }).then(res => this.refreshCustomers())
-      .catch(err => console.log(err));
+      this.props.addCustomer(submitText)
     }
   
     // Gets customers from db
     refreshCustomers = () => {
-        let cancelToken = new CancelToken(function executor(c) {
-            cancel = c;
-          })
-        axios.get('https://g-f-django-bank-app.herokuapp.com/customers/', {
-            cancelToken: cancelToken
-        })
-        .then(res => this.setState({customersList: res.data}))
-        .catch(err => console.log(err))
+      this.props.getCustomers();
     };
   
     // Renders customers
     renderCustomers = () => {
-      let customers = this.state.customersList;
+      let customers = this.props.customers;
   
       return customers.map(customer => (
         <Model deleteItem={this.deleteCustomer} key={customer.id} item={customer}/>
@@ -68,4 +48,9 @@ export class Customers extends Component {
     }
 }
 
-export default Customers
+const mapStateToProps = state => ({
+  customers: state.customers.customers
+})
+
+export default connect(mapStateToProps, 
+  { getCustomers, deleteCustomer, addCustomer })(Customers);
