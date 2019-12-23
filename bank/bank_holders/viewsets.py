@@ -22,8 +22,6 @@ class Customer_Viewset(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-
-
 class Product_Viewset(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = Product_Serializer
