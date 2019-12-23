@@ -17,7 +17,7 @@ class Customer(models.Model):
         null=True,
     )
     customer = models.ForeignKey(User,
-    related_name='Customers', on_delete=models.CASCADE,
+    related_name='customers', on_delete=models.CASCADE,
     null=True,
     )
 
