@@ -17,7 +17,7 @@ class Customer_Viewset(viewsets.ModelViewSet):
     serializer_class = Customer_Serializer
 
     def get_queryset(self):
-        return self.request.user.customers.all()
+        return self.request.user.all()
 
     # Saves customer
     def perform_create(self, serializer):
