@@ -13,4 +13,5 @@ router.register(r'products', bank_views.Product_Viewset, 'products')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('', include('accounts.urls')),
 ]
