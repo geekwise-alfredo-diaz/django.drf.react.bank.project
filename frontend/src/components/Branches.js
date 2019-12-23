@@ -15,23 +15,30 @@ export class Branches extends Component {
   
     // Refresh branches the moment component loads
     componentDidMount() {
-      this.refreshList();
+      this.refreshBranches();
     }
 
     componentWillUnmount() {
       cancel();
     }
 
-    deleteItem = (e)=> {
-      console.log(e);
+    deleteItem = (branchId)=> {
+      axios.delete(`https://g-f-django-bank-app.herokuapp.com/branches/${branchId}/`)
+      .then(res => this.setState({branchList: this.state.branchList.filter(
+          branch => branch.id !== branchId
+      )}))
     }
 
-    addItem = (e)=> {
-      console.log(e);
+    addBranches = (submitText)=> {
+      axios.post('https://g-f-django-bank-app.herokuapp.com/branches/',
+      {
+          name: submitText
+      }).then(res => this.refreshBranches())
+      .catch(err => console.log(err));
     }
   
     // Gets branches from db
-    refreshList = () => {
+    refreshBranches = () => {
       let cancelToken = new CancelToken(function executor(c) {
           cancel = c;
         })
@@ -46,15 +53,15 @@ export class Branches extends Component {
     renderBranches = () => {
       let branches = this.state.branchList;
   
-      return branches.map(customer => (
-        <Model deleteItem={this.deleteItem} key={customer.id} item={customer}/>
+      return branches.map(branch => (
+        <Model deleteItem={this.deleteItem} key={branch.id} item={branch}/>
       ));
     };
 
     render() {
         return (
             <div>
-                <AddItem addItem={this.addItem} placeholder={'Branch name'}/>
+                <AddItem addItem={this.addBranches} placeholder={'Branch name'}/>
                 {this.renderBranches()}
             </div>
         )

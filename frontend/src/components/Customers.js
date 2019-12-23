@@ -1,50 +1,37 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
+import { getCustomers, deleteCustomer, addCustomer } from '../actions/customers';
 
 import Model from './Model'
 import AddItem from './AddItem'
 
-let CancelToken = axios.CancelToken;
-let cancel;
-
 export class Customers extends Component {
-
-    state = {
-        customersList: []
-    };
+    static propTypes = {
+      customers: PropTypes.array.isRequired,
+    }
   
     // Refresh customers the moment component loads
     componentDidMount() {
-      this.refreshList();
+      this.refreshCustomers();
     }
 
-    componentWillUnmount() {
-      cancel();
+    deleteCustomer = (customerId)=> {
+      this.props.deleteCustomer(customerId);
     }
 
-    deleteCustomer = (e)=> {
-      console.log(e)
-    }
-
-    addCustomer = (e)=> {
-      console.log(e)
+    addCustomer = (submitText)=> {
+      this.props.addCustomer(submitText)
     }
   
     // Gets customers from db
-    refreshList = () => {
-        let cancelToken = new CancelToken(function executor(c) {
-            cancel = c;
-          })
-        axios.get('https://g-f-django-bank-app.herokuapp.com/customers/', {
-            cancelToken: cancelToken
-        })
-        .then(res => this.setState({customersList: res.data}))
-        .catch(err => console.log(err))
+    refreshCustomers = () => {
+      this.props.getCustomers();
     };
   
     // Renders customers
     renderCustomers = () => {
-      let customers = this.state.customersList;
+      let customers = this.props.customers;
   
       return customers.map(customer => (
         <Model deleteItem={this.deleteCustomer} key={customer.id} item={customer}/>
@@ -61,4 +48,9 @@ export class Customers extends Component {
     }
 }
 
-export default Customers
+const mapStateToProps = state => ({
+  customers: state.customers.customers
+})
+
+export default connect(mapStateToProps, 
+  { getCustomers, deleteCustomer, addCustomer })(Customers);
