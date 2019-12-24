@@ -27,3 +27,14 @@ class Login_Viewset(generics.GenericAPIView):
             'user': User_Serializer(user, context=self.get_serializer_context()).data,
             'token': AuthToken.objects.create(user)[1]
         })
+
+# User Viewset
+class User_Viewset(generics.RetrieveAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    serializer_class = User_Serializer
+
+    # Looks for token and returns associated user
+    def get_object(self):
+        return self.request.user
