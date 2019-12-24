@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Branch(models.Model):
     name = models.CharField(max_length=30)
@@ -9,11 +10,15 @@ class Branch(models.Model):
 
 class Customer(models.Model):
     name = models.CharField(max_length=30)
-    # email = models.EmailField(max_length=300, default='domain@setup.com')
+    email = models.EmailField(max_length=300, default='domain@setup.com')
     branch = models.ForeignKey(
         Branch,
         on_delete=models.CASCADE,
         null=True,
+    )
+    customer = models.ForeignKey(User,
+    related_name='customers', on_delete=models.CASCADE,
+    null=True,
     )
 
     def __str__(self):
@@ -33,7 +38,7 @@ class Account(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=30)
-    # email = models.EmailField(max_length=300)#, default='Email@domain.setup')
+    email = models.EmailField(max_length=300)#, default='Email@domain.setup')
     # product_options = (
     #     ('savings', 'SAVINGS'),
     #     ('checking', 'CHECKING'),
