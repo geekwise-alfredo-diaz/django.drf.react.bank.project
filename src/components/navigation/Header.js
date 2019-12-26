@@ -11,25 +11,22 @@ export default class Header extends React.Component {
     navStyle = {
       padding: '12px',
       backgroundColor: '#333',
+      color: 'white',
     }
 
     render() {
       return (
         <Nav style={this.navStyle} activeKey="/">
-          <Nav.Item>
+          <Nav.Item className="col-8 col-md-10">
             <Link style={this.linkStyle} to="/">Home</Link>
-          </Nav.Item>
-          <Nav.Item>
             <Link style={this.linkStyle} to="/branches">Branches</Link>
-          </Nav.Item>
-          <Nav.Item>
             <Link style={this.linkStyle} to="/holders">Holders</Link>
-          </Nav.Item>
-          <Nav.Item>
             <Link style={this.linkStyle} to="/accounts">Accounts</Link>
+            <Link style={this.linkStyle} to="/products">Products</Link>
           </Nav.Item>
-          <Nav.Item>
-            <Link style={this.linkStyle} to="/products" >Products</Link>
+          <Nav.Item className="col-4 col-md-2">
+            <Link style={this.linkStyle} to="/login">Login</Link>{'|'}
+            <Link style={this.linkStyle} to="/register">Register</Link>
           </Nav.Item>
         </Nav>
       )
