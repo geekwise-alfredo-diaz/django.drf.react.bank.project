@@ -11,18 +11,13 @@ class Branch(models.Model):
 class Customer(models.Model):
     name = models.CharField(max_length=30)
     email = models.EmailField(max_length=300, default='domain@setup.com')
-    branch = models.ForeignKey(
-        Branch,
-        on_delete=models.CASCADE,
-        null=True,
-    )
     customer = models.ForeignKey(User,
     related_name='customers', on_delete=models.CASCADE,
     null=True,
     )
 
     def __str__(self):
-        return f"{self.name}: {self.branch}"
+        return f"{self.name}: {self.customer}"
 
 class Account(models.Model):
     name = models.CharField(max_length=30)

@@ -20,7 +20,7 @@ class Customer_Viewset(viewsets.ModelViewSet):
         return self.request.user.customers.all()
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(customer=self.request.user)
 
 class Product_Viewset(viewsets.ModelViewSet):
     queryset = Product.objects.all()
