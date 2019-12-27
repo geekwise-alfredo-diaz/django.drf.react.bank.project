@@ -1,4 +1,4 @@
-import { GET_CUSTOMERS, DELETE_CUSTOMER, ADD_CUSTOMER } from '../actions/types';
+import { GET_CUSTOMERS, DELETE_CUSTOMER, ADD_CUSTOMER, LOGOUT_SUCCESS } from '../actions/types';
 
 const initialState = {
     customers: [],
@@ -21,6 +21,11 @@ export default function(state=initialState, action) {
             return {
                 ...state,
                 customers: [...state.customers, action.payload]
+            }
+        case LOGOUT_SUCCESS:
+            return {
+                ...state,
+                customers: [],
             }
         default:
             return state;

@@ -1,16 +1,25 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
+
 import Branches from './components/Branches';
 import Accounts from './components/Accounts';
 import Customers from './components/Customers';
 import Products from './components/Products';
 import Home from './components/navigation/Home';
 import Header from './components/navigation/Header';
+import Login from './components/accounts/Login';
+import Register from './components/accounts/Register'
+import PrivateRoute from './components/navigation/PrivateRoute';
+
+
 import { Provider } from 'react-redux';
 import store from './store';
+import { loadUser } from './actions/auth';
 
 class App extends Component {
-  
+  componentDidMount() {
+    store.dispatch(loadUser());
+  }
 
   render() {
     return (
@@ -22,8 +31,11 @@ class App extends Component {
           <Route exact path="/" component={Home}/>
           <Route path="/branches" component={Branches}/>
           <Route path="/accounts" component={Accounts}/>
-          <Route path="/holders" component={Customers}/>
+          {/* Private Route */}
+          <PrivateRoute path="/holders" component={Customers}/>
           <Route path="/products" component={Products}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/register" component={Register}/>
 
 
         </Router>
