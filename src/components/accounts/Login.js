@@ -14,7 +14,7 @@ export class Login extends Component {
 
     static propTypes = {
       login: PropTypes.func.isRequired,
-      isAthenticated: PropTypes.bool,
+      isAuthenticated: PropTypes.bool,
     }
 
     emailInput = (emailText) => {
@@ -27,8 +27,6 @@ export class Login extends Component {
 
     formSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state.email);
-        console.log(this.state.password);
         this.props.login(this.state.email, this.state.password);
         this.setState({email: ''});
         this.setState({password: ''});
@@ -36,7 +34,7 @@ export class Login extends Component {
 
 
     render() {
-        if(this.props.isAthenticated) {
+        if(this.props.isAuthenticated) {
           return <Redirect to="/" />
         }
 
@@ -44,7 +42,7 @@ export class Login extends Component {
 
         return (
             <Form onSubmit={this.formSubmit} style={this.FormStyle} className="container">
-              <Form.Group controlId="formBasicEmail">
+              <Form.Group controlId="formBasicName">
                 <Form.Label>Username</Form.Label>
                 <Form.Control onChange={this.emailInput} value={email} type="text" placeholder="Enter name" />
                 <Form.Text className="text-muted">
@@ -68,7 +66,7 @@ export class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAthenticated: state.auth.isAthenticated
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps, {login})(Login)
