@@ -24,9 +24,8 @@ export const deleteCustomer = (customerId) => (dispatch, getState) => {
 
 // ADD CUSTOMER
 export const addCustomer = (customerName) => (dispatch, getState) => {
-    axios.post(`https://g-f-django-bank-app.herokuapp.com/customers/`, {
-        name: customerName,
-    }, tokenConfig(getState))
+    const body = JSON.stringify({name: customerName});
+    axios.post(`https://g-f-django-bank-app.herokuapp.com/customers/`, body, tokenConfig(getState))
     .then(res => {
         getCustomers()
         dispatch({
