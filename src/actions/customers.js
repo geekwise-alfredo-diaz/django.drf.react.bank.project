@@ -33,3 +33,16 @@ export const addCustomer = (customerName) => (dispatch, getState) => {
         payload: res.data,
     })}).catch(err => console.log(err));
 }
+
+// UPDATE CUSTOMER
+export const updateCustomer = (customerId, customerName) => (dispatch, getState) => {
+    let body = {
+        id: customerId,
+        name: customerName
+    }
+
+    axios.put(`https://g-f-django-bank-app.herokuapp.com/customers/${customerId}/`, body, tokenConfig(getState))
+    .then(res => {
+        getCustomers();
+    }).catch(err => console.log(err));
+}
