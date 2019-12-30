@@ -38,4 +38,4 @@ Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
 
 ## Deployment
 
-Deployment for frontend and backend is through Heroku, app links are above
+Deployment for the frontend and backend is through Heroku, app links are above
