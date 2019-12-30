@@ -16,6 +16,10 @@ export class Customers extends Component {
       this.refreshCustomers();
     }
 
+    editCustomer = () => {
+      
+    }
+
     deleteCustomer = (customerId)=> {
       this.props.deleteCustomer(customerId);
     }
