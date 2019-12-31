@@ -27,6 +27,18 @@ export class Accounts extends Component {
         .catch(err => console.log(err));
     }
 
+    updateAccount = (accountId, accountName) => {
+        let body = {
+          id: accountId,
+          name: accountName
+      }
+
+      axios.put(`https://g-f-django-bank-app.herokuapp.com/accounts/${accountId}/`, body)
+      .then(res => {
+          this.refreshAccounts();
+      }).catch(err => console.log(err));
+    }
+
     componentDidMount() {
         this.refreshAccounts()
     }
@@ -52,7 +64,8 @@ export class Accounts extends Component {
         let accountsList = this.state.accountsList
         
         return accountsList.map(account => (
-            <Model deleteItem={this.deleteAccount} key={account.id} item={account}/>
+            <Model deleteItem={this.deleteAccount} editItem={this.updateAccount}
+            key={account.id} item={account}/>
         ));
     };
 

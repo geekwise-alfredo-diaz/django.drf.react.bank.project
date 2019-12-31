@@ -48,10 +48,22 @@ export class Products extends Component {
         .catch(err => console.log(err))
     }
 
+    updateProduct = (productId, productName) => {
+        let body = {
+          id: productId,
+          name: productName
+      }
+
+      axios.put(`https://g-f-django-bank-app.herokuapp.com/products/${productId}/`, body)
+      .then(res => {
+          this.refreshAccounts();
+      }).catch(err => console.log(err));
+    }
+
     renderProducts = () => {
         return this.state.productsList.map(product => (
             <Model 
-                deleteItem={this.deleteProducts}
+                deleteItem={this.deleteProducts} editItem={this.updateProduct}
                 item={product} key={product.id}
             />
         ))

@@ -29,6 +29,18 @@ export class Branches extends Component {
       )}))
     }
 
+    updateBranch = (branchId, branchName) => {
+        let body = {
+          id: branchId,
+          name: branchName
+      }
+
+      axios.put(`https://g-f-django-bank-app.herokuapp.com/branches/${branchId}/`, body)
+      .then(res => {
+          this.refreshBranches();
+      }).catch(err => console.log(err));
+    }
+
     addBranches = (submitText)=> {
       axios.post('https://g-f-django-bank-app.herokuapp.com/branches/',
       {
@@ -54,7 +66,7 @@ export class Branches extends Component {
       let branches = this.state.branchList;
   
       return branches.map(branch => (
-        <Model deleteItem={this.deleteItem} key={branch.id} item={branch}/>
+        <Model deleteItem={this.deleteItem} editItem={this.updateBranch} key={branch.id} item={branch}/>
       ));
     };
 
