@@ -5,7 +5,9 @@ Bank project using Django and React deployed via Heroku<br>
 [Backend](https://g-f-django-bank-app.herokuapp.com)
 
 ## Demo User
-- Interactable user for login/authentication
+Interactable user for login/authentication
+`Username: Demo` <br>
+`Password: Demo123`
 
 ## Features:
 * Password Based Auth
@@ -15,9 +17,6 @@ Bank project using Django and React deployed via Heroku<br>
 * Users Can Open New Bank Accounts
     * Multiple Accounts Per User
     * Accounts Can Be Checking or Savings
-
-`Username: Demo` <br>
-`Password: Demo123`
 
 ## Built With
 
