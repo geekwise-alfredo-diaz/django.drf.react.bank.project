@@ -1,5 +1,5 @@
 import React, {createContext, useReducer}from 'react'
-import branchReducer from './reducers/branches'
+import branchReducer from '../reducers/branches'
 
 // Context that will be provided via CC.Provider
 export const BranchContext = createContext();
