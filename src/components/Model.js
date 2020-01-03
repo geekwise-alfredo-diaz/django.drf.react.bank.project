@@ -9,7 +9,6 @@ export class Model extends Component {
 
     toggleEdit = () => {
         this.setState({isEditable: !this.state.isEditable})
-        console.log(this.state.isEditable);
         if(!this.state.isEditable) {
             this.setState({choice: 'Confirm Change'})
             this.divStyle = this.highlight()
