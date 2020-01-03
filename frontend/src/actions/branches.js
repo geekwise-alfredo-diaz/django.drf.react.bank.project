@@ -25,6 +25,7 @@ export const addBranch = (submitText, dispatch) => {
     axios.post('https://g-f-django-bank-app.herokuapp.com/branches/',
     {
         name: submitText
-    }).then(res => getBranches(dispatch))
-    .catch(err => console.log(err));
+    }).then(res => {getBranches()
+        dispatch({type: 'ADD_BRANCH', payload: res.data})
+    }).catch(err => console.log(err));
 }

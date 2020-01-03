@@ -32,7 +32,7 @@ export class Products extends Component {
         axios.post('https://g-f-django-bank-app.herokuapp.com/products/',
         {
             name: submitText
-        }).then(res => this.refreshProducts())
+        }).then(res => this.setState({productsList: [res.data, ...this.state.productsList]}))
         .catch(err => console.log(err));
     }
 

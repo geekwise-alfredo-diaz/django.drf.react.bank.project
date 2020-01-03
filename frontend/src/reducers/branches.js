@@ -3,7 +3,7 @@ const branchReducer = (state, action) => {
         case 'RENDER_BRANCHES':
             return [...action.payload]
         case 'ADD_BRANCH':
-            return [...state, action.payload]
+            return [action.payload, ...state]
         case 'DELETE_BRANCH':
             return [...state.filter(
                 branch => branch.id !== action.payload)]

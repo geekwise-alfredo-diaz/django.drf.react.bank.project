@@ -23,8 +23,9 @@ export class Accounts extends Component {
         axios.post('https://g-f-django-bank-app.herokuapp.com/accounts/',
         {
             name: submitText
-        }).then(res => this.refreshAccounts())
-        .catch(err => console.log(err));
+        }).then(res => this.setState(
+            {accountsList: [res.data, ...this.state.accountsList]}
+        )).catch(err => console.log(err));
     }
 
     updateAccount = (accountId, accountName) => {

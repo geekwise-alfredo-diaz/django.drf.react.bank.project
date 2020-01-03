@@ -20,7 +20,7 @@ export default function(state=initialState, action) {
         case ADD_CUSTOMER:
             return {
                 ...state,
-                customers: [...state.customers, action.payload]
+                customers: [action.payload, ...state.customers]
             }
         case LOGOUT_SUCCESS:
             return {
