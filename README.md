@@ -5,7 +5,7 @@ Bank project using Django and React deployed via Heroku<br>
 [Backend](https://g-f-django-bank-app.herokuapp.com)
 
 ## Demo User
-Interactable user for login/authentication
+Interactable user for login/authentication <br>
 `Username: Demo` <br>
 `Password: Demo123`
 
