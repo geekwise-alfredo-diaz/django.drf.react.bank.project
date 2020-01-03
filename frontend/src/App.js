@@ -15,6 +15,7 @@ import PrivateRoute from './components/navigation/PrivateRoute';
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
+import BranchContextProvider from './context/ContextProvider'
 
 class App extends Component {
   componentDidMount() {
@@ -27,16 +28,18 @@ class App extends Component {
         <Router>
 
           <Header />
-
           <Route exact path="/" component={Home}/>
-          <Route path="/branches" component={Branches}/>
+
+          <BranchContextProvider>
+            <Route path="/branches" component={Branches}/>
+          </BranchContextProvider>
+
           <Route path="/accounts" component={Accounts}/>
           {/* Private Route */}
           <PrivateRoute path="/holders" component={Customers}/>
           <Route path="/products" component={Products}/>
           <Route path="/login" component={Login}/>
           <Route path="/register" component={Register}/>
-
 
         </Router>
       </Provider>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { getCustomers, deleteCustomer, addCustomer } from '../actions/customers';
+import { getCustomers, deleteCustomer, addCustomer, updateCustomer } from '../actions/customers';
 
 import Model from './Model'
 import AddItem from './AddItem'
@@ -14,6 +14,15 @@ export class Customers extends Component {
     // Refresh customers the moment component loads
     componentDidMount() {
       this.refreshCustomers();
+    }
+
+    updateCustomer = (customerId, customerName) => {
+        let body = {
+          id: customerId,
+          name: customerName
+      }
+      console.log("Edited Customer? " + body.name);
+      this.props.updateCustomer(customerId, customerName);
     }
 
     deleteCustomer = (customerId)=> {
@@ -34,7 +43,8 @@ export class Customers extends Component {
       let customers = this.props.customers;
   
       return customers.map(customer => (
-        <Model deleteItem={this.deleteCustomer} key={customer.id} item={customer}/>
+        <Model deleteItem={this.deleteCustomer} editItem={this.updateCustomer}
+         key={customer.id} item={customer}/>
       ));
     };
 
@@ -53,4 +63,4 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, 
-  { getCustomers, deleteCustomer, addCustomer })(Customers);
+  { getCustomers, deleteCustomer, addCustomer, updateCustomer })(Customers);
