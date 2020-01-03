@@ -4,6 +4,23 @@ Bank project using Django and React deployed via Heroku<br>
 [Frontend](https://g-f-react-bank-app.herokuapp.com)<br>
 [Backend](https://g-f-django-bank-app.herokuapp.com)
 
+## Features:
+* Email/Password Based Auth
+    * Replaces The Default Django User Model
+    * Associated With Multiple Bank Accounts
+    * Bank Accounts
+
+* Users Can Open New Bank Accounts
+    * Existing Accounts Are Read-Only For Standard Users
+    * Multiple Accounts Per User
+    * Accounts Can Be Checking or Savings
+    * Accounts Have A Balance & A Human-Readable Name
+
+* Demo User
+    * Interactable user for login
+`Username: Demo`
+`Password: Demo123`
+
 ## Built With
 
 * [React](https://reactjs.org/) - The web framework used
@@ -11,19 +28,6 @@ Bank project using Django and React deployed via Heroku<br>
 * [Heroku](https://www.heroku.com/) - Deployment
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-### Prerequisites
-
-Python 3 - Being able to run a virtual environment
-
-```
-python manage.py runserver
-```
-
-Node Js - Having npm for scripts
-```
-npm run start
-```
 
 ## Getting Started
 
