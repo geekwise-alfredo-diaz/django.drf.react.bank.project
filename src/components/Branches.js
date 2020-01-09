@@ -28,6 +28,7 @@ export default function Branches() {
     const addBranches = (submitText)=> {
       addBranch(submitText, dispatch);
     }
+    
 
     const renderBranches = () => {
       return branches.map(account => (
@@ -36,8 +37,13 @@ export default function Branches() {
       ));
     };
 
+    const branchStyle = {
+      width: '100%',
+      marginTop: '55px',
+    }
+
     return (
-      <div>
+      <div style={branchStyle}>
         <AddItem addItem={addBranches} placeholder={'Branch name'}/>
         {renderBranches()}
       </div>

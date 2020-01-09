@@ -1,17 +1,23 @@
 import React, { Component } from "react";
 import { HashRouter as Router, Route } from 'react-router-dom';
 
+// Navigation
+import Home from './components/navigation/Home';
+import Header from './components/navigation/Header';
+import SideBar from './components/navigation/SideBar';
+
+// Components
 import Branches from './components/Branches';
 import Accounts from './components/Accounts';
 import Customers from './components/Customers';
 import Products from './components/Products';
-import Home from './components/navigation/Home';
-import Header from './components/navigation/Header';
+
+// Authentication
 import Login from './components/accounts/Login';
 import Register from './components/accounts/Register'
 import PrivateRoute from './components/navigation/PrivateRoute';
 
-
+// Stage Management
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
@@ -28,18 +34,24 @@ class App extends Component {
         <Router>
 
           <Header />
-          <Route exact path="/" component={Home}/>
 
-          <BranchContextProvider>
-            <Route path="/branches" component={Branches}/>
-          </BranchContextProvider>
+          <div className="d-flex flex-row">
+            <Route path="/" component={SideBar}/>
 
-          <Route path="/accounts" component={Accounts}/>
-          {/* Private Route */}
-          <PrivateRoute path="/holders" component={Customers}/>
-          <Route path="/products" component={Products}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/register" component={Register}/>
+
+            <Route exact path="/" component={Home}/>
+
+            <BranchContextProvider>
+              <Route path="/branches" component={Branches}/>
+            </BranchContextProvider>
+
+            <Route path="/accounts" component={Accounts}/>
+            {/* Private Route */}
+            <PrivateRoute path="/holders" component={Customers}/>
+            <Route path="/products" component={Products}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/register" component={Register}/>
+          </div>
 
         </Router>
       </Provider>

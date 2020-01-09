@@ -61,7 +61,8 @@ export class Login extends Component {
     }
 
     FormStyle = {
-        marginTop: '30px'
+        height: '100vh',
+        padding: '30px 0 0 0'
     }
 }
 

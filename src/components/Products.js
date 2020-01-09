@@ -69,9 +69,14 @@ export class Products extends Component {
         ))
     }
 
+    branchStyle = {
+        width: '100%',
+        marginTop: '55px',
+    }
+
     render() {
         return (
-            <div>
+            <div style={this.branchStyle}>
                 <AddItem addItem={this.addProducts}
                 placeholder={"Product's name"}
                 />

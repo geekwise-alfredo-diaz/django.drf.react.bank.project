@@ -16,17 +16,26 @@ class Header extends React.Component {
 
     linkStyle = {
       margin: '10px 5px',
-      color: 'white',
+      color: '#322f8b',
     }
 
     navStyle = {
       padding: '12px',
-      backgroundColor: '#333',
-      color: 'white',
+      backgroundColor: 'white',
+      color: '#322f8b',
       height: '55px',
+      position: 'fixed',
+      top: '0',
+      width: '100%',
+      zIndex: '1'
     }
 
     rightHStyle = {
+      marginTop: '-7px',
+    }
+
+    sixStyle = {
+      fontSize: '28px',
       marginTop: '-7px',
     }
 
@@ -54,11 +63,7 @@ class Header extends React.Component {
       return (
         <Nav style={this.navStyle} activeKey="/">
           <Nav.Item className="col-8 col-md-9 col-lg-10">
-            <Link style={this.linkStyle} to="/">Home</Link>
-            <Link style={this.linkStyle} to="/branches">Branches</Link>
-            <Link style={this.linkStyle} to="/holders">Holders</Link>
-            <Link style={this.linkStyle} to="/accounts">Accounts</Link>
-            <Link style={this.linkStyle} to="/products">Products</Link>
+            <div style={this.sixStyle}>6</div>
           </Nav.Item>
           { isAuthenticated ? authLinks : guestLinks }
         </Nav>
