@@ -27,7 +27,7 @@ export default function Branches() {
 
     const addBranches = (submitText)=> {
       addBranch(submitText, dispatch);
-    }
+    } 
     
 
     const renderBranches = () => {
