@@ -42,7 +42,6 @@ export class Register extends Component {
 
 
     render() {
-        console.log('Auth: ' + this.props.isAuthenticated);
         if(this.props.isAuthenticated) {
           return <Redirect to="/"/>
         }
@@ -50,32 +49,50 @@ export class Register extends Component {
         const {username, email, password} = this.state;
 
         return (
-            <Form onSubmit={this.formSubmit} style={this.FormStyle} className="container">
-              <Form.Group controlId="formBasicName">
-                <Form.Label>Username</Form.Label>
-                <Form.Control onChange={this.nameInput} value={username} type="username" placeholder="Enter name" />
-              </Form.Group>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control onChange={this.emailInput} value={email} type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control onChange={this.passwordInput} value={password} type="password" placeholder="Password" />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
+          <form onSubmit={this.formSubmit} style={this.FormStyle}>
+            <div style={this.headerStyle} className="login-header">
+              Register
+            </div>
+            <div style={this.inputStyle} className="form-group">
+              <label htmlFor="exampleInputEmail1">Username</label>
+              <input onChange={this.nameInput} value={username} type="username" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+              <small id="emailHelp" className="form-text text-muted">Username credentials for signing in</small>
+            </div>
+            <div style={this.inputStyle} className="form-group">
+              <label htmlFor="exampleInputEmail1">Email</label>
+              <input onChange={this.emailInput} value={email} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+              <small id="emailHelp" className="form-text text-muted">Email wont be shared</small>
+            </div>
+            <div style={this.inputStyle} className="form-group">
+              <label htmlFor="exampleInputPassword1">Password</label>
+              <input onChange={this.passwordInput} value={password} type="password" className="form-control" id="exampleInputPassword1"/>
+            </div>
+            <button style={this.buttonStyle} type="submit" className="btn btn-primary">Submit</button>
+          </form>
         )
     }
 
+    inputStyle = {
+      margin: '10px 20px 10px 20px',
+    }
+
+    buttonStyle = {
+      margin: '0 20px 10px 20px',
+    }
+
     FormStyle = {
-      height: '100vh',
-      padding: '30px 0 0 0'
+      width: '80%',
+      backgroundColor: '#fcfcfc',
+      height: 'fit-content',
+      margin: '65px auto 0 auto',
+    }
+
+    headerStyle = {
+      backgroundColor: '#312f8b',
+      height: '40px',
+      textAlign: 'center',
+      paddingTop: '7px',
+      color: 'white',
     }
 }
 
