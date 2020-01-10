@@ -6,7 +6,7 @@ import Model from './Model';
 import AddItem from './AddItem';
 
 // Context
-import { BranchContext } from '../context/ContextProvider'
+import { BranchContext } from '../context/BranchProvider'
 import { getBranches, deleteBranch, updateBranch, addBranch } from '../actions/branches'
 
 export default function Branches() {
