@@ -1,25 +1,42 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import { FaDiceSix } from "react-icons/fa";
+// Icons
+import { MdAccountBalance } from 'react-icons/md';
+import { FaHome } from 'react-icons/fa';
+import { FaUserLock } from 'react-icons/fa';
+import { MdAssignmentInd } from 'react-icons/md';
+import { FaRegCreditCard } from 'react-icons/fa';
+
 
 export class SideBar extends Component {
     render() {
         return (
             <div style={this.sideBarContainerStyle}>
                 <div style={this.sideBarContentStyle}>
-                    <Link style={this.linkStyle} to="/">H</Link>
-                    <Link style={this.linkStyle} to="/branches">B</Link>
-                    <Link style={this.linkStyle} to="/holders">H</Link>
-                    <Link style={this.linkStyle} to="/accounts">A</Link>
-                    <Link style={this.linkStyle} to="/products">P</Link>
+                    <Link style={this.linkStyle} to="/">
+                       <FaHome size={'32px'}/>
+                    </Link>
+                    <Link style={this.linkStyle} to="/branches">
+                        <MdAccountBalance size={'32px'}/>
+                    </Link>
+                    <Link style={this.linkStyle} to="/holders">
+                        <FaUserLock size={'32px'}/>
+                    </Link>
+                    <Link style={this.linkStyle} to="/accounts">
+                        <MdAssignmentInd size={'32px'}/>
+                    </Link>
+                    <Link style={this.linkStyle} to="/products">
+                        <FaRegCreditCard size={'32px'}/>
+                    </Link>
                 </div>
             </div>
         )
     }
 
     sideBarContainerStyle = {
-        width: '60px',
+        maxWidth: '60px',
+        minWidth: '60px',
         backgroundColor: '#1f98d9',
         position: 'relative',
         zIndex: '0',
@@ -36,7 +53,8 @@ export class SideBar extends Component {
 
     linkStyle = {
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        margin: '10px 0',
     }
 }
 
