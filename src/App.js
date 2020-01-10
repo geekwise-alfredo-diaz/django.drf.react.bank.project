@@ -21,7 +21,7 @@ import PrivateRoute from './components/navigation/PrivateRoute';
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
-import BranchContextProvider from './context/ContextProvider'
+import BranchContextProvider from './context/BranchProvider'
 
 class App extends Component {
   componentDidMount() {
