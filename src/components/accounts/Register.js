@@ -10,6 +10,7 @@ export class Register extends Component {
         username: '',
         email: '',
         password: '',
+        message: '',
     }
 
     static propTypes = {
@@ -32,11 +33,16 @@ export class Register extends Component {
     formSubmit = (e) => {
         e.preventDefault();
         const {email, password, username} = this.state
+        if(username === '' || password === '') {
+          this.setState({message: 'Name or password must not be empty'})
+        } else {
+          this.setState({message: ''})
         const newUser = {username, email, password};
         this.props.register(newUser);
         this.setState({email: ''});
         this.setState({password: ''});
         this.setState({username: ''});
+        }
     }
 
 
@@ -55,7 +61,7 @@ export class Register extends Component {
             <div style={this.inputStyle} className="form-group">
               <label htmlFor="exampleInputEmail1">Username</label>
               <input onChange={this.nameInput} value={username} type="username" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-              <small id="emailHelp" className="form-text text-muted">Username credentials for signing in</small>
+              <small id="emailHelp" className="form-text text-muted">{this.state.message}</small>
             </div>
             <div style={this.inputStyle} className="form-group">
               <label htmlFor="exampleInputEmail1">Email</label>
