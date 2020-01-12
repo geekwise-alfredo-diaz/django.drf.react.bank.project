@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { login } from '../../actions/auth';
+import { login } from '../../actions/authActions';
 import { Redirect } from 'react-router-dom';
 
+import {AuthContext} from '../../context/AuthProvider'
+
 export class Login extends Component {
+
+    static contextType = AuthContext
 
     state = {
         email: '',
         password: '',
-    }
-
-    static propTypes = {
-      login: PropTypes.func.isRequired,
-      isAuthenticated: PropTypes.bool,
     }
 
     emailInput = (emailText) => {
@@ -27,14 +24,15 @@ export class Login extends Component {
     formSubmit = (e) => {
         e.preventDefault();
         console.log('Creds: ' + this.state.email + ' ' + this.state.password)
-        this.props.login(this.state.email, this.state.password);
+        login(this.state.email, this.state.password, this.context.dispatch);
         this.setState({email: ''});
         this.setState({password: ''});
     }
 
 
     render() {
-        if(this.props.isAuthenticated) {
+        console.log('Render: ' + this.context.auth.isAuthenticated)
+        if(this.context.auth.isAuthenticated) {
           return <Redirect to="/" />
         }
 
@@ -83,8 +81,4 @@ export class Login extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, {login})(Login)
+export default Login 

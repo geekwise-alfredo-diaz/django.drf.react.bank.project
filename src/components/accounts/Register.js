@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { register } from '../../actions/auth';
+import { register } from '../../actions/authActions';
 import { Redirect } from 'react-router-dom';
 
+import { AuthContext } from '../../context/AuthProvider'
+
 export class Register extends Component {
+    static contextType = AuthContext
 
     state = {
         username: '',
         email: '',
         password: '',
         message: '',
-    }
-
-    static propTypes = {
-      register: PropTypes.func.isRequired,
-      isAuthenticated: PropTypes.bool,
     }
 
     nameInput = (nameText) => {
@@ -38,7 +34,7 @@ export class Register extends Component {
         } else {
           this.setState({message: ''})
         const newUser = {username, email, password};
-        this.props.register(newUser);
+        register(newUser, this.context.dispatch);
         this.setState({email: ''});
         this.setState({password: ''});
         this.setState({username: ''});
@@ -47,7 +43,7 @@ export class Register extends Component {
 
 
     render() {
-        if(this.props.isAuthenticated) {
+        if(this.context.auth.isAuthenticated) {
           return <Redirect to="/"/>
         }
 
@@ -60,17 +56,17 @@ export class Register extends Component {
             </div>
             <div style={this.inputStyle} className="form-group">
               <label htmlFor="exampleInputEmail1">Username</label>
-              <input onChange={this.nameInput} value={username} type="username" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-              <small id="emailHelp" className="form-text text-muted">{this.state.message}</small>
+              <input onChange={this.nameInput} value={username} type="username" className="form-control"/>
+              <small className="form-text text-muted">{this.state.message}</small>
             </div>
             <div style={this.inputStyle} className="form-group">
-              <label htmlFor="exampleInputEmail1">Email</label>
-              <input onChange={this.emailInput} value={email} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-              <small id="emailHelp" className="form-text text-muted">Email wont be shared</small>
+              <label htmlFor="exampleInputEmail2">Email</label>
+              <input onChange={this.emailInput} value={email} type="email" className="form-control"/>
+              <small className="form-text text-muted">Email wont be shared</small>
             </div>
             <div style={this.inputStyle} className="form-group">
               <label htmlFor="exampleInputPassword1">Password</label>
-              <input onChange={this.passwordInput} value={password} type="password" className="form-control" id="exampleInputPassword1"/>
+              <input onChange={this.passwordInput} value={password} type="password" className="form-control"/>
             </div>
             <button style={this.buttonStyle} type="submit" className="btn btn-primary">Submit</button>
           </form>
@@ -101,8 +97,4 @@ export class Register extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, {register})(Register)
+export default Register
