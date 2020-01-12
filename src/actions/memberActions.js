@@ -15,7 +15,7 @@ export const tokenConfig = () => {
 }
 
 // GET CUSTOMERS
-export const getCustomers = (dispatch) => {
+export const getCustomers = dispatch => {
     axios.get('https://g-f-django-bank-app.herokuapp.com/customers/', tokenConfig())
     .then(res => {
         dispatch({
@@ -39,7 +39,7 @@ export const addCustomer = (customerName, dispatch) => {
     const body = JSON.stringify({name: customerName});
     axios.post(`https://g-f-django-bank-app.herokuapp.com/customers/`, body, tokenConfig())
     .then(res => {
-        getCustomers()
+        getCustomers(dispatch)
         dispatch({
         type: ADD_CUSTOMER,
         payload: res.data,
