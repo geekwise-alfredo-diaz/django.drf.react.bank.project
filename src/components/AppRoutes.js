@@ -1,3 +1,4 @@
+// Native Imports
 import React, { Component } from "react";
 import { Route } from 'react-router-dom';
 
@@ -9,19 +10,23 @@ import SideBar from './navigation/SideBar';
 import Branches from './Branches';
 import Accounts from './Accounts';
 import Products from './Products';
-import Members from './Members'
+import Members from './Members';
+import Manage from './Manage';
 
 // Authentication
 import Login from './accounts/Login';
 import Register from './accounts/Register'
 import PrivateRoute from './navigation/PrivateRoute';
+import ManagementRoute from './navigation/ManagementRoute'
 
-// Context
+// Context Provider
 import BranchContextProvider from '../context/BranchProvider'
 import MemberContextProvider from '../context/MemberProvider'
 
-// test
+// Context
 import { AuthContext } from '../context/AuthProvider'
+
+// Actions
 import {loadUser} from '../actions/authActions'
 
 export class AppRoutes extends Component {
@@ -42,16 +47,17 @@ export class AppRoutes extends Component {
 
                 {/*Branches*/}
                 <BranchContextProvider>
-                <Route path="/branches" component={Branches}/>
+                    <Route path="/branches" component={Branches}/>
                 </BranchContextProvider>
 
                 <Route path="/accounts" component={Accounts}/>
                 {/* Private Route */}
 
                 <MemberContextProvider>
-                <PrivateRoute path="/holders" component={Members}/>
+                    <PrivateRoute path="/holders" component={Members}/>
                 </MemberContextProvider>
 
+                <ManagementRoute path="/admin" component={Manage}/>
                 <Route path="/products" component={Products}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register}/>
