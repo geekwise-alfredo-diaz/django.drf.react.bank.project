@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+// Native Imports
+import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
 // Icons
@@ -7,13 +8,28 @@ import { FaHome } from 'react-icons/fa';
 import { FaUserLock } from 'react-icons/fa';
 import { MdAssignmentInd } from 'react-icons/md';
 import { FaRegCreditCard } from 'react-icons/fa';
+import { IoIosPeople } from 'react-icons/io'
 
+// Context
+import { AuthContext } from '../../context/AuthProvider'
+
+// Auth Actions
+import { verifyTeller, verifyManagement } from '../../actions/authActions'
 
 export class SideBar extends Component {
+    static contextType = AuthContext
+
     render() {
-        return (
-            <div style={this.sideBarContainerStyle}>
-                <div style={this.sideBarContentStyle}>
+        const {isAuthenticated, isLoading} = this.context.auth
+
+        const customerLinks = (
+            <Link style={this.linkStyle} to="/products">
+                <FaRegCreditCard size={'32px'}/>
+            </Link>
+        )
+
+        const tellerLinks = (
+            <Fragment>
                     <Link style={this.linkStyle} to="/">
                        <FaHome size={'32px'}/>
                     </Link>
@@ -29,6 +45,36 @@ export class SideBar extends Component {
                     <Link style={this.linkStyle} to="/products">
                         <FaRegCreditCard size={'32px'}/>
                     </Link>
+            </Fragment>
+        )
+
+        const managementLinks = (
+            <Fragment>
+                    <Link style={this.linkStyle} to="/admin">
+                        <IoIosPeople size={'32px'}/>
+                    </Link>
+            </Fragment>
+        )
+
+        const outputLinks = () => {
+            console.log('Truth: ' + isAuthenticated)
+            console.log('IS: ' + verifyTeller(this.context.auth))
+            if (isAuthenticated) {
+                return (
+                    <Fragment>
+                        { verifyTeller(this.context.auth) ? tellerLinks : customerLinks }
+                        { verifyManagement(this.context.auth) ? managementLinks : null }
+                    </Fragment>
+                )
+            } else {
+                return customerLinks
+            }
+        }
+
+        return (
+            <div style={this.sideBarContainerStyle}>
+                <div style={this.sideBarContentStyle}>
+                    {outputLinks()}
                 </div>
             </div>
         )
