@@ -6,9 +6,9 @@ export const AuthContext = createContext();
 
 // The Provider itself that will be used in App.js
 const AuthProvider = props => {
-
     const initialState = {
         token: localStorage.getItem('token'),
+        permissions: JSON.parse(localStorage.getItem('permissions')),
         isAuthenticated: null,
         isLoading: false,
         user: null
