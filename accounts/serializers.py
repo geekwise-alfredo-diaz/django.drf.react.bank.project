@@ -6,13 +6,22 @@ from django.contrib.auth import authenticate
 class Permission_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Permission
-        fields = '__all__'
+        fields = ('name',)
 
 # User Serializer
 class User_Serializer(serializers.ModelSerializer):
+    user_permissions = Permission_Serializer(many=True)
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'email')
+        fields = ('id', 'username', 'email', 'user_permissions')
+
+    def created(self, validated_data):
+        permissions_data = validated_data.pop('user_permissions')
+        user = User.objects.create(**validated_data)
+        for permission_data in permissions_data:
+            Permission.objects.create(user=user, **permission_data)
+        return user
 
 # Register Serializer
 class Register_Serializer(serializers.ModelSerializer):
@@ -32,9 +41,9 @@ class Register_Serializer(serializers.ModelSerializer):
 
 # Log in Serializer
 class Login_Serializer(serializers.Serializer):
-    class Meta:
-        model = Permission
-        fields = '__all__'
+    # class Meta:
+    #     model = Permission
+    #     fields = '__all__'
 
     username = serializers.CharField()
     password = serializers.CharField()
