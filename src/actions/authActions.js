@@ -76,3 +76,32 @@ export const tokenConfig = () => {
 
     return config;
 }
+
+// If returns true, user has permissions equal to management
+export const verifyManagement = (auth) => {
+    if(!auth.isAuthenticated){
+        return false
+    }
+    for(let i = 0; i < auth.permissions.length; i++) {
+        if (auth.permissions[i] === 'auth.view_permission'){
+            return true
+        }
+    }
+    return false;
+}
+
+// If returns true, this means that the user has permissions 
+// EQUAL TO OR GREATER than a teller
+export const verifyTeller = (auth) => {
+    if(!auth.isAuthenticated){
+        return false
+    }
+    for(let i = 0; i < auth.permissions.length; i++) {
+        console.log('Permission: ' + typeof(auth.permissions))
+        if (auth.permissions[i] === 'bank.change_customer'){
+            return true
+        }
+    }
+    // return true;
+    return false;
+}
