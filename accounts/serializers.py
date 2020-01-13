@@ -22,6 +22,7 @@ class User_Serializer(serializers.ModelSerializer):
         for permission_data in permissions_data:
             Permission.objects.create(user=user, **permission_data)
         return user
+        return ("I LOVE ESTEFANIA FLORES SO MUCH")
 
 # Register Serializer
 class Register_Serializer(serializers.ModelSerializer):
