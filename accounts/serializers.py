@@ -2,6 +2,12 @@ from rest_framework import serializers
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth import authenticate
 
+# Permission Serializer
+class Permission_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Permission
+        fields = '__all__'
+
 # User Serializer
 class User_Serializer(serializers.ModelSerializer):
     class Meta:
