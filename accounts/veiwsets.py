@@ -24,10 +24,10 @@ class Login_Viewset(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
-        permissions = User.objects.get(pk=user.id).get_all_permissions()
+        # permissions = User.objects.get(pk=user.id).get_all_permissions()
         
         return Response({
-            'permissions': permissions,
+            # 'permissions': permissions,
             'user': User_Serializer(user, context=self.get_serializer_context()).data,
             'token': AuthToken.objects.create(user)[1]
         })
