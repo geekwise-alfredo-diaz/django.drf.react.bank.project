@@ -27,7 +27,9 @@ class Header extends React.Component {
     }
 
     rightHStyle = {
-      marginTop: '-7px',
+      margin: '-7px 0 0 -20px',
+      whiteSpace: 'nowrap',
+  
     }
 
     sixStyle = {
