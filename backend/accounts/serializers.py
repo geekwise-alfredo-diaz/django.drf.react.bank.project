@@ -1,12 +1,28 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.contrib.auth import authenticate
+
+# Permission Serializer
+class Permission_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Permission
+        fields = ('name',)
 
 # User Serializer
 class User_Serializer(serializers.ModelSerializer):
+    groups = Permission_Serializer(many=True)
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'email')
+        fields = ('id', 'username', 'email', 'groups')
+
+    def created(self, validated_data):
+        permissions_data = validated_data.pop('groups')
+        user = User.objects.create(**validated_data)
+        for permission_data in permissions_data:
+            Permission.objects.create(user=user, **permission_data)
+        return user
+        return ("I LOVE ESTEFANIA FLORES SO MUCH")
 
 # Register Serializer
 class Register_Serializer(serializers.ModelSerializer):
@@ -26,6 +42,10 @@ class Register_Serializer(serializers.ModelSerializer):
 
 # Log in Serializer
 class Login_Serializer(serializers.Serializer):
+    # class Meta:
+    #     model = Permission
+    #     fields = '__all__'
+
     username = serializers.CharField()
     password = serializers.CharField()
     
