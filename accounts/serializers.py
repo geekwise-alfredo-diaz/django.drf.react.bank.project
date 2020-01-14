@@ -1,12 +1,20 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User, Permission
 from django.contrib.auth import authenticate
+from django.http import JsonResponse
+
+class Certain_User_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'groups')
+
+    data = f"Users: {User.objects.filter(groups__name='test')}"
 
 # Permission Serializer
 class Permission_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Permission
-        fields = ('name',)
+        fields = ('id', 'name',)
 
 # User Serializer
 class User_Serializer(serializers.ModelSerializer):
@@ -22,7 +30,6 @@ class User_Serializer(serializers.ModelSerializer):
         for permission_data in permissions_data:
             Permission.objects.create(user=user, **permission_data)
         return user
-        return ("I LOVE ESTEFANIA FLORES SO MUCH")
 
 # Register Serializer
 class Register_Serializer(serializers.ModelSerializer):
