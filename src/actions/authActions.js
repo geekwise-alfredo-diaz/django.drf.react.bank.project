@@ -6,7 +6,7 @@ export const loadUser = dispatch => {
     dispatch({type: USER_LOADING});
     axios.get('https://g-f-django-bank-app.herokuapp.com/auth/user', tokenConfig())
     .then(res => {
-        console.log('Loading user: ' + Object.keys(res.data))
+        console.log('Loading user group: ' + res.data.groups[0].name)
         dispatch({
             type: USER_LOADED,
             payload: res.data,
@@ -77,31 +77,15 @@ export const tokenConfig = () => {
     return config;
 }
 
-// If returns true, user has permissions equal to management
-export const verifyManagement = (auth) => {
-    if(!auth.isAuthenticated){
-        return false
+export const getAuthLevel = auth => {
+    switch (auth.group) {
+        case 'Management':
+            return 3;
+        case 'Tellers':
+            return 2;
+        case 'Customers':
+            return 1;
+        default:
+            return 0;
     }
-    for(let i = 0; i < auth.permissions.length; i++) {
-        if (auth.permissions[i] === 'auth.view_permission'){
-            return true
-        }
-    }
-    return false;
-}
-
-// If returns true, this means that the user has permissions 
-// EQUAL TO OR GREATER than a teller
-export const verifyTeller = (auth) => {
-    if(!auth.isAuthenticated){
-        return false
-    }
-    for(let i = 0; i < auth.permissions.length; i++) {
-        console.log('Permission: ' + typeof(auth.permissions))
-        if (auth.permissions[i] === 'bank.change_customer'){
-            return true
-        }
-    }
-    // return true;
-    return false;
 }
