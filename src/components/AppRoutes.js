@@ -18,6 +18,7 @@ import Login from './accounts/Login';
 import Register from './accounts/Register'
 import PrivateRoute from './navigation/PrivateRoute';
 import ManagementRoute from './navigation/ManagementRoute'
+import TellerRoute from './navigation/TellerRoute'
 
 // Context Provider
 import BranchContextProvider from '../context/BranchProvider'
@@ -47,10 +48,10 @@ export class AppRoutes extends Component {
 
                 {/*Branches*/}
                 <BranchContextProvider>
-                    <Route path="/branches" component={Branches}/>
+                    <TellerRoute path="/branches" component={Branches}/>
                 </BranchContextProvider>
 
-                <Route path="/accounts" component={Accounts}/>
+                <TellerRoute path="/accounts" component={Accounts}/>
                 {/* Private Route */}
 
                 <MemberContextProvider>
@@ -58,7 +59,7 @@ export class AppRoutes extends Component {
                 </MemberContextProvider>
 
                 <ManagementRoute path="/admin" component={Manage}/>
-                <Route path="/products" component={Products}/>
+                <TellerRoute path="/products" component={Products}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register}/>
             </div>
