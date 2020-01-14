@@ -8,7 +8,7 @@ class Certain_User_Serializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email', 'groups')
 
-    data = f"{User.objects.filter(groups__name='test')}"
+    data = f"{User.objects.filter(groups__name='test')[0]}"
 
 # Permission Serializer
 class Permission_Serializer(serializers.ModelSerializer):
