@@ -42,14 +42,11 @@ export class SideBar extends Component {
                     <Link style={this.linkStyle} to="/accounts">
                         <MdAssignmentInd size={'32px'}/>
                     </Link>
+                    <Link style={this.linkStyle} to="/products">
+                        <FaRegCreditCard size={'32px'}/>
+                    </Link>
                 </Fragment>
                 ) : null }
-
-                { isAuthenticated ? (
-                <Link style={this.linkStyle} to="/products">
-                    <FaRegCreditCard size={'32px'}/>
-                </Link>
-                ) : <Redirect to="/" />}
             </Fragment>
         )
 
