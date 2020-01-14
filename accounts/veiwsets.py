@@ -1,8 +1,10 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import User_Serializer, Register_Serializer, Login_Serializer, Certain_User_Serializer
-from django.contrib.auth.models import User
+from .serializers import User_Serializer, Register_Serializer, Login_Serializer, Certain_User_Serializer, Group_Serializer
+from django.contrib.auth.models import User, Group
+from django.http import JsonResponse, HttpResponse
+from django.core import serializers as serl
 
 class Register_Viewset(generics.GenericAPIView):
     serializer_class = Register_Serializer
@@ -47,16 +49,21 @@ class Certain_User_Viewset(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    serializer_class = Certain_User_Serializer
+    serializer_class = User_Serializer
 
-    # Looks for token and returns associated user
     def get(self, request):
-        # data = serializers.serialize('json', self.get_queryset())
-        # return HttpResponse(data, content_type="application/json")
-        return Response ({
-            'users': Certain_User_Serializer().data
-        })
-
+        queryset = User.objects.filter(groups__name='test')
+        queryset = serl.serialize('json', queryset)
+        return HttpResponse(queryset, content_type='application/json')
 
     # def get(self, request):
-    #     return self.request.user
+        # queryset = User.objects.values()
+        # res = {key: queryset[key] for key in queryset.__dict__.keys() & {'username', 'email'}} 
+        # return Response({"users": list(queryset)})
+
+class Group_Viewset(generics.GenericAPIView):
+    serializer_class = Group_Serializer
+
+    def get(self, request):
+        queryset = Group.objects.values()
+        return Response({"groups": list(queryset)})

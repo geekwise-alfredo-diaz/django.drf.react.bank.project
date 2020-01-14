@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .veiwsets import Register_Viewset, Login_Viewset, User_Viewset, Certain_User_Viewset
+from .veiwsets import Register_Viewset, Login_Viewset, User_Viewset, Certain_User_Viewset, Group_Viewset
 from knox import views as knox_views
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('auth', include('knox.urls')),
     path('auth/users', Certain_User_Viewset.as_view()),
+    path('auth/groups', Group_Viewset.as_view())
 ]
