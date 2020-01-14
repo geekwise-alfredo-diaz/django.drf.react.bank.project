@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import User_Serializer, Register_Serializer, Login_Serializer
+from .serializers import User_Serializer, Register_Serializer, Login_Serializer, Certain_User_Serializer
 from django.contrib.auth.models import User
 
 class Register_Viewset(generics.GenericAPIView):
@@ -42,3 +42,21 @@ class User_Viewset(generics.RetrieveAPIView):
     # Looks for token and returns associated user
     def get_object(self):
         return self.request.user
+
+class Certain_User_Viewset(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    serializer_class = Certain_User_Serializer
+
+    # Looks for token and returns associated user
+    def get(self, request):
+        # data = serializers.serialize('json', self.get_queryset())
+        # return HttpResponse(data, content_type="application/json")
+        return Response ({
+            'users': Certain_User_Serializer().data
+        })
+
+
+    # def get(self, request):
+    #     return self.request.user
