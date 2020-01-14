@@ -1,6 +1,6 @@
 // Native Imports
 import React, { Component, Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 // Icons
 import { MdAccountBalance } from 'react-icons/md';
@@ -14,25 +14,25 @@ import { IoIosPeople } from 'react-icons/io'
 import { AuthContext } from '../../context/AuthProvider'
 
 // Auth Actions
-import { verifyTeller, verifyManagement } from '../../actions/authActions'
+import { getAuthLevel } from '../../actions/authActions'
 
 export class SideBar extends Component {
     static contextType = AuthContext
 
     render() {
-        const {isAuthenticated, isLoading} = this.context.auth
+        const { auth } = this.context
+        const { isAuthenticated } = auth
 
-        const customerLinks = (
-            <Link style={this.linkStyle} to="/products">
-                <FaRegCreditCard size={'32px'}/>
-            </Link>
-        )
-
-        const tellerLinks = (
+        const links = (
             <Fragment>
-                    <Link style={this.linkStyle} to="/">
-                       <FaHome size={'32px'}/>
+                { getAuthLevel(auth) === 3 ? (
+                    <Link style={this.linkStyle} to="/admin">
+                        <IoIosPeople size={'32px'}/> 
                     </Link>
+                ) : null }
+
+                { getAuthLevel(auth) >= 2 ? (
+                <Fragment>
                     <Link style={this.linkStyle} to="/branches">
                         <MdAccountBalance size={'32px'}/>
                     </Link>
@@ -42,38 +42,35 @@ export class SideBar extends Component {
                     <Link style={this.linkStyle} to="/accounts">
                         <MdAssignmentInd size={'32px'}/>
                     </Link>
-                    <Link style={this.linkStyle} to="/products">
-                        <FaRegCreditCard size={'32px'}/>
-                    </Link>
-            </Fragment>
-        )
+                </Fragment>
+                ) : null }
 
-        const managementLinks = (
-            <Fragment>
-                    <Link style={this.linkStyle} to="/admin">
-                        <IoIosPeople size={'32px'}/>
-                    </Link>
+                { isAuthenticated ? (
+                <Link style={this.linkStyle} to="/products">
+                    <FaRegCreditCard size={'32px'}/>
+                </Link>
+                ) : <Redirect to="/" />}
             </Fragment>
         )
 
         const outputLinks = () => {
-            console.log('Truth: ' + isAuthenticated)
-            console.log('IS: ' + verifyTeller(this.context.auth))
             if (isAuthenticated) {
                 return (
                     <Fragment>
-                        { verifyTeller(this.context.auth) ? tellerLinks : customerLinks }
-                        { verifyManagement(this.context.auth) ? managementLinks : null }
+                        { links }
                     </Fragment>
                 )
             } else {
-                return customerLinks
+                return <Redirect to="/"/>
             }
         }
 
         return (
             <div style={this.sideBarContainerStyle}>
                 <div style={this.sideBarContentStyle}>
+                    <Link style={this.linkStyle} to="/">
+                        <FaHome size={'32px'}/>
+                    </Link>
                     {outputLinks()}
                 </div>
             </div>
