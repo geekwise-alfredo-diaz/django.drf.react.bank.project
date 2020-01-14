@@ -7,7 +7,6 @@ const authReducer = (state, action) => {
             return {
                 ...state,
                 isLoading: true,
-                permissions: JSON.parse(localStorage.getItem('permissions')),
             }
         case USER_LOADED:
             console.log('Loaded user: ' + Object.keys(action.payload))
@@ -16,17 +15,18 @@ const authReducer = (state, action) => {
                 isAuthenticated: true,
                 isLoading: false,
                 user: action.payload,
+                group: action.payload.groups[0].name
             }
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
-            console.log('Logged-in user: ' + action.payload.permissions)
+            console.log('Logged-in user: ' + action.payload.user.groups[0].name)
             localStorage.setItem('token', action.payload.token);
-            localStorage.setItem('permissions', JSON.stringify(action.payload.permissions))
             return {
                 ...state,
                 ...action.payload,
                 isAuthenticated: true,
                 isLoading: false,
+                group: action.payload.user.groups[0].name
             }
         case LOGIN_FAIL:
         case AUTH_ERROR:
@@ -34,11 +34,10 @@ const authReducer = (state, action) => {
         case REGISTER_FAIL:
             console.log('Logged-out user')
             localStorage.removeItem('token');
-            localStorage.removeItem('permissions');
             return {
                 ...state,
                 token: null,
-                permissions: null,
+                group: null,
                 user: null,
                 isAuthenticated: false,
                 isLoading: false,
