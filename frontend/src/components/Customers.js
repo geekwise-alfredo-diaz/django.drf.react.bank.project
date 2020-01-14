@@ -48,9 +48,14 @@ export class Customers extends Component {
       ));
     };
 
+    branchStyle = {
+      width: '100%',
+      marginTop: '55px',
+    }
+
     render() {
         return (
-            <div>
+            <div style={this.branchStyle}>
                 <AddItem placeholder={"Holder's name"} addItem={this.addCustomer}/>
                 {this.renderCustomers()}
             </div>

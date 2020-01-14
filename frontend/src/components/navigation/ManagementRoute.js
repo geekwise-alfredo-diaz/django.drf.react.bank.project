@@ -1,9 +1,14 @@
+// Native Imports
 import React, {useContext} from 'react'
 import { Route, Redirect } from 'react-router-dom';
 
+// Context
 import {AuthContext} from '../../context/AuthProvider'
 
-const PrivateRoute = ({component: Component, ...rest}) => {
+// Actions
+import { getAuthLevel } from '../../actions/authActions'
+
+const ManagementRoute = ({component: Component, ...rest}) => {
     const { auth } = useContext(AuthContext);
 
     return(
@@ -12,7 +17,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
         render={props => {
             if(auth.isLoading) {
                 return <h2>Loading...</h2>
-            } else if(!auth.isAuthenticated) {
+            } else if(getAuthLevel(auth) < 3) {
                 return <Redirect to="/login" />
             } else {
                 return <Component {...props}/>
@@ -22,4 +27,4 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     )
 }
 
-export default PrivateRoute;
+export default ManagementRoute;

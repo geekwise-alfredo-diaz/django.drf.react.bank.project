@@ -70,9 +70,14 @@ export class Accounts extends Component {
         ));
     };
 
+    branchStyle = {
+        width: '100%',
+        marginTop: '55px',
+    }
+
     render() {
         return (
-            <div>
+            <div style={this.branchStyle}>
                 <div>
                     <AddItem 
                     placeholder={"Account's name"} addItem={this.addAccount}

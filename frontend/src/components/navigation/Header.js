@@ -1,44 +1,56 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import { logout } from '../../actions/auth';
+import { logout } from '../../actions/authActions';
+
+import { AuthContext } from '../../context/AuthProvider'
 
 
 class Header extends React.Component {
-
-    static propTypes = {
-      auth: PropTypes.object.isRequired,
-      logout: PropTypes.func.isRequired,
-    }
+    static contextType = AuthContext
 
 
     linkStyle = {
       margin: '10px 5px',
-      color: 'white',
+      color: '#322f8b',
     }
 
     navStyle = {
       padding: '12px',
-      backgroundColor: '#333',
-      color: 'white',
+      backgroundColor: 'white',
+      color: '#322f8b',
       height: '55px',
+      position: 'fixed',
+      top: '0',
+      width: '100%',
+      zIndex: '1'
     }
 
     rightHStyle = {
+      margin: '-7px 0 0 -20px',
+      whiteSpace: 'nowrap',
+  
+    }
+
+    sixStyle = {
+      fontSize: '28px',
       marginTop: '-7px',
     }
 
+    logoutUser = () => {
+      logout(this.context.dispatch)
+    }
+
     render() {
-      const { isAuthenticated, user } = this.props.auth;
+      console.log('Context: ' + Object.keys(this.context))
+      const { isAuthenticated, user } = this.context.auth;
 
       const authLinks = (
         <Nav.Item style={this.rightHStyle} className="col-4 col-md-3 col-lg-2">
           <span className="navbar-text mr-3">
               {user ? `${user.username}` : ""}
           </span>
-          <button onClick={this.props.logout} className="btn-primary btn btn-sm text-light">
+          <button onClick={this.logoutUser} className="btn-primary btn btn-sm text-light">
             Sign Out
           </button>
         </Nav.Item>
@@ -54,11 +66,7 @@ class Header extends React.Component {
       return (
         <Nav style={this.navStyle} activeKey="/">
           <Nav.Item className="col-8 col-md-9 col-lg-10">
-            <Link style={this.linkStyle} to="/">Home</Link>
-            <Link style={this.linkStyle} to="/branches">Branches</Link>
-            <Link style={this.linkStyle} to="/holders">Holders</Link>
-            <Link style={this.linkStyle} to="/accounts">Accounts</Link>
-            <Link style={this.linkStyle} to="/products">Products</Link>
+            <div style={this.sixStyle}>6</div>
           </Nav.Item>
           { isAuthenticated ? authLinks : guestLinks }
         </Nav>
@@ -66,8 +74,4 @@ class Header extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
-})
-
-export default connect(mapStateToProps, {logout})(Header)
+export default Header
