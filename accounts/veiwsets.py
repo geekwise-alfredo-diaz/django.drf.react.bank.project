@@ -49,7 +49,11 @@ class Certain_User_Viewset(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    serializer_class = User_Serializer
+    serializer_class = Certain_User_Serializer
+
+    # Looks for token and returns associated user
+    # def get_object(self):
+    #     return self.request.user
 
     def get(self, request):
         queryset = User.objects.filter(groups__name='test')
@@ -57,9 +61,9 @@ class Certain_User_Viewset(generics.GenericAPIView):
         return HttpResponse(queryset, content_type='application/json')
 
     # def get(self, request):
-        # queryset = User.objects.values()
-        # res = {key: queryset[key] for key in queryset.__dict__.keys() & {'username', 'email'}} 
-        # return Response({"users": list(queryset)})
+    #     queryset = User.objects.values()
+    #     res = {key: queryset[key] for key in queryset.__dict__.keys() & {'username', 'email'}} 
+    #     return Response({"users": list(queryset)})
 
 class Group_Viewset(generics.GenericAPIView):
     serializer_class = Group_Serializer
