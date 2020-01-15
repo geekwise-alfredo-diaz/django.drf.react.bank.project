@@ -9,6 +9,7 @@ import { FaUserLock } from 'react-icons/fa';
 import { MdAssignmentInd } from 'react-icons/md';
 import { FaRegCreditCard } from 'react-icons/fa';
 import { IoIosPeople } from 'react-icons/io'
+import { FaUserPlus } from 'react-icons/fa'
 
 // Context
 import { AuthContext } from '../../context/AuthProvider'
@@ -25,28 +26,34 @@ export class SideBar extends Component {
 
         const links = (
             <Fragment>
-                { getAuthLevel(auth) === 3 ? (
-                    <Link style={this.linkStyle} to="/admin">
-                        <IoIosPeople size={'32px'}/> 
-                    </Link>
+                { getAuthLevel(auth) >= 2 ? (
+                    <Fragment>
+                        <Link style={this.linkStyle} to="/branches">
+                            <MdAccountBalance size={'32px'}/>
+                        </Link>
+                        <Link style={this.linkStyle} to="/holders">
+                            <FaUserLock size={'32px'}/>
+                        </Link>
+                        <Link style={this.linkStyle} to="/accounts">
+                            <MdAssignmentInd size={'32px'}/>
+                        </Link>
+                        <Link style={this.linkStyle} to="/products">
+                            <FaRegCreditCard size={'32px'}/>
+                        </Link>
+                    </Fragment>
                 ) : null }
 
-                { getAuthLevel(auth) >= 2 ? (
-                <Fragment>
-                    <Link style={this.linkStyle} to="/branches">
-                        <MdAccountBalance size={'32px'}/>
-                    </Link>
-                    <Link style={this.linkStyle} to="/holders">
-                        <FaUserLock size={'32px'}/>
-                    </Link>
-                    <Link style={this.linkStyle} to="/accounts">
-                        <MdAssignmentInd size={'32px'}/>
-                    </Link>
-                    <Link style={this.linkStyle} to="/products">
-                        <FaRegCreditCard size={'32px'}/>
-                    </Link>
-                </Fragment>
+                { getAuthLevel(auth) === 3 ? (
+                    <Fragment >
+                        <Link style={this.linkStyle} to="/admin">
+                            <IoIosPeople size={'32px'}/> 
+                        </Link>
+                        <Link style={this.linkStyle} to="/register">
+                            <FaUserPlus size={'32px'}/>
+                        </Link>
+                    </Fragment>
                 ) : null }
+
             </Fragment>
         )
 
