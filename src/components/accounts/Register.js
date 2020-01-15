@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { register } from '../../actions/authActions';
 import { Redirect } from 'react-router-dom';
 
+// Context
 import { AuthContext } from '../../context/AuthProvider'
+
+// Auth Context
+import { getAuthLevel } from '../../actions/authActions'
+import { verify } from 'crypto';
 
 export class Register extends Component {
     static contextType = AuthContext
@@ -43,7 +48,7 @@ export class Register extends Component {
 
 
     render() {
-        if(this.context.auth.isAuthenticated) {
+        if(this.context.auth.isAuthenticated && ! (getAuthLevel(this.context.auth) >= 3)) {
           return <Redirect to="/"/>
         }
 
@@ -64,6 +69,18 @@ export class Register extends Component {
               <input onChange={this.emailInput} value={email} type="email" className="form-control"/>
               <small className="form-text text-muted">Email wont be shared</small>
             </div>
+
+            {getAuthLevel(this.context.auth) >= 3 ? (
+            <div style={this.inputStyle} className="form-group">
+              <label htmlFor="exampleFormControlSelect1">Groups</label>
+              <select className="form-control" id="exampleFormControlSelect1">
+                <option>Management</option>
+                <option>Teller</option>
+                <option>Member</option>
+              </select>
+            </div>
+            ): null }
+
             <div style={this.inputStyle} className="form-group">
               <label htmlFor="exampleInputPassword1">Password</label>
               <input onChange={this.passwordInput} value={password} type="password" className="form-control"/>
