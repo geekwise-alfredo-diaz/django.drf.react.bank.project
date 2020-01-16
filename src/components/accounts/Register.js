@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { register } from '../../actions/authActions';
 import { Redirect } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ export class Register extends Component {
     static contextType = AuthContext
 
     state = {
-        group: [3],
+        group: [8],
         username: '',
         email: '',
         password: '',
@@ -55,7 +55,7 @@ export class Register extends Component {
         this.setState({email: ''});
         this.setState({password: ''});
         this.setState({username: ''});
-        this.setState({group: [3]});
+        this.setState({group: [8]});
         }
     }
 
@@ -87,10 +87,16 @@ export class Register extends Component {
             {getAuthLevel(this.context.auth) >= 3 ? (
             <div style={this.inputStyle} className="form-group">
               <label htmlFor="exampleFormControlSelect1">Groups</label>
-              <select onChange={this.handleSelect} className="form-control" id="exampleFormControlSelect1">
-                <option value={2} >Management</option>
-                <option value={1} >Teller</option>
-                <option value={3} >Member</option>
+              <select defaultValue={8} onChange={this.handleSelect} className="form-control" id="exampleFormControlSelect1">
+                {getAuthLevel(this.context.auth) >= 5 ? (
+                  <Fragment>
+                    <option value={7} >Branch Admin</option>
+                    <option value={6} >Branch Staff</option>
+                  </Fragment>) : null 
+                }
+                {getAuthLevel(this.context.auth) >= 4 ? (<option value={4} >Bank Admin</option>) : null }
+                {getAuthLevel(this.context.auth) >= 3 ? (<option value={5} >Bank Staff</option>) : null }
+                <option value={8} >Member</option>
               </select>
             </div>
             ): null }
