@@ -35,13 +35,16 @@ export const login = (username, password, dispatch) => {
     })
 }
 
-export const register = ({username, email, password}, dispatch) => {
+export const register = ({username, email, password, group}, dispatch) => {
+    console.log('Group: ' + group)
     const config = {
         headers: {
             'Content-Type': 'application/json',
         }
     }
-    const body = JSON.stringify({username, email, password});
+    const body = JSON.stringify({username, email, password, groups: [parseFloat(group)]});
+    // const body = {username, email, password, group};
+    console.log('Body: ' + body)
     axios.post('https://g-f-django-bank-app.herokuapp.com/auth/register', body, config)
     .then(res => {
         dispatch({
@@ -77,7 +80,24 @@ export const tokenConfig = () => {
     return config;
 }
 
-export const getAuthLevel = auth => {
+export const createUser = ({username, email, password, group}) => {
+    console.log('Group: ' + group)
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }
+    const body = JSON.stringify({username, email, password, groups: [parseFloat(group)]});
+    console.log('Body: ' + body)
+    axios.post('https://g-f-django-bank-app.herokuapp.com/auth/register', body, config)
+    .then(res => alert('User was created succesfully'))
+    .catch(err => {
+        alert('An error occured creating a user')
+    })
+}
+
+
+export const getAuthLevel = (auth) => {
     switch (auth.group) {
         case 'Management':
             return 3;
