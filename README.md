@@ -7,15 +7,15 @@ Bank project using Django and React deployed via Heroku<br>
 ## Demo Users
 Interactable User's for login/authentication <br>
 
-`Username: Branch.Admin` : Able To Register Branch Staff <br>
+`Username: Branch.Admin` -> Able To Register Branch Staff <br>
 `Password: asdf`<br> <br>
-`Username: Branch.Staff` :  Able To Register Bank Admins<br>
+`Username: Branch.Staff` ->  Able To Register Bank Admins<br>
 `Password: asdf`<br> <br>
-`Username: Bank.Admin` : Able To Register and View Bank Staff <br>
+`Username: Bank.Admin` -> Able To Register and View Bank Staff <br>
 `Password: asdf`<br> <br>
-`Username: Bank.Staff` : Able To Register Members <br>
+`Username: Bank.Staff` -> Able To Register Members <br>
 `Password: asdf`<br> <br>
-`Username: Member` : Able To View Own Information <br>
+`Username: Member` -> Able To View Own Information <br>
 `Password: asdf`<br> <br>
 
 ## Features:
