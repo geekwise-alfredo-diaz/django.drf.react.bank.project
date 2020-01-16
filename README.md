@@ -1,40 +1,35 @@
 # Bank Project
-
 Bank project using Django and React deployed via Heroku<br>
 [Frontend](https://g-f-react-bank-app.herokuapp.com)<br>
 [Backend](https://g-f-django-bank-app.herokuapp.com)
 
-## Demo User
-Interactable user for login/authentication <br>
-`Username: Demo` <br>
-`Password: Demo123`
+## Demo Users
+Interactable User's for login/authentication <br>
+`Username: Branch.Admin` <br>
+`Password: asdf`<br> <br>
+`Username: Branch.Staff` <br>
+`Password: asdf`<br> <br>
+`Username: Bank.Admin` <br>
+`Password: asdf`<br> <br>
+`Username: Bank.Staff` <br>
+`Password: asdf`<br> <br>
+`Username: Member` <br>
+`Password: asdf`<br> <br>
 
 ## Features:
-* Password Based Auth
+* Password Based Auth and Permissions
     * Replaces The Default Django User Model
-    * Register or Login a user
+    * Register or Login a Member
+    * Certain Users Have Certain Permissions
 
-* Users Can Open New Bank Accounts
-    * Multiple Accounts Per User
+* Members Can Open New Bank Accounts
+    * Multiple Accounts Per Member
     * Accounts Can Be Checking or Savings
 
 ## Built With
-
 * [React](https://reactjs.org/) - The web framework used
 * [Django](https://www.djangoproject.com/) - Backend framework used
 * [Heroku](https://www.heroku.com/) - Deployment
 
-## Getting Started
-
-`npm run start` to run the frontend in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-`python manage.py runserver` to run the backend<br />
-Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
-
 ## Deployment
-
 Deployment for frontend and backend is through Heroku, app links are above
