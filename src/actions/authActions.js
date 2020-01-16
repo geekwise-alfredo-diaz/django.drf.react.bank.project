@@ -99,11 +99,15 @@ export const createUser = ({username, email, password, group}) => {
 
 export const getAuthLevel = (auth) => {
     switch (auth.group) {
-        case 'Management':
+        case 'branch.admin':
+            return 5;
+        case 'branch.staff':
+            return 4;
+        case 'bank.admin':
             return 3;
-        case 'Tellers':
+        case 'bank.staff':
             return 2;
-        case 'Customers':
+        case 'member':
             return 1;
         default:
             return 0;
