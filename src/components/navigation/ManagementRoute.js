@@ -17,7 +17,7 @@ const ManagementRoute = ({component: Component, ...rest}) => {
         render={props => {
             if(auth.isLoading) {
                 return <h2>Loading...</h2>
-            } else if(getAuthLevel(auth) < 3) {
+            } else if(getAuthLevel(auth) !== 3) {
                 return <Redirect to="/login" />
             } else {
                 return <Component {...props}/>
