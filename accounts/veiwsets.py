@@ -56,7 +56,7 @@ class Certain_User_Viewset(generics.GenericAPIView):
     #     return self.request.user
 
     def get(self, request):
-        queryset = User.objects.filter(groups__name='test')
+        queryset = User.objects.filter(groups__name='bank.staff')
         queryset = serl.serialize('json', queryset)
         return HttpResponse(queryset, content_type='application/json')
 
