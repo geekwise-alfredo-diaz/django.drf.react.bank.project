@@ -1,10 +1,12 @@
 # Bank Project
 Bank project using Django and React deployed via Heroku<br>
+
 [Frontend](https://g-f-react-bank-app.herokuapp.com)<br>
 [Backend](https://g-f-django-bank-app.herokuapp.com)
 
 ## Demo Users
 Interactable User's for login/authentication <br>
+
 `Username: Branch.Admin` <br>
 `Password: asdf`<br> <br>
 `Username: Branch.Staff` <br>
