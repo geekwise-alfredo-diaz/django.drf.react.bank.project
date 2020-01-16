@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import sixdegreece from '../../sixdegreece.jpg'
+// import sixdegreece from '../../sixdegreece.jpg'
 
 export class Home extends Component {
 
@@ -36,24 +36,34 @@ export class Home extends Component {
                     </div>
                 </section>
 
-                <div style={{margin: '25px 0 0 0', paddingTop: '20px'}} className="album bg-light">
-                    <div className="container">
-
-                        <div className="row d-flex justify-content-center">
-                        <div className="col-md-8">
-                            <div className="card mb-4 box-shadow">
-                            <img alt='Six Dè Greece' src={sixdegreece} className="card-img-top" style={this.imgStyle}/>
-                            <div className="card-body">
-                                <p className="card-text">6 Dè Greece makes it simple for business development and marketing to create customized reports tracking progress toward organizational goals.</p>
-                                <div className="d-flex justify-content-between align-items-center">
-                                <div className="btn-group">
-                                    <button type="button" className="btn btn-sm btn-outline-secondary">View More</button>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
+                <div className="card-deck mb-3 text-center">
+                    <div className="card mb-4 shadow-sm">
+                    <div className="card-header">
+                        <h4 className="my-0 font-weight-normal">Pro</h4>
+                    </div>
+                    <div className="card-body">
+                        <h1 className="card-title pricing-card-title">$56 <small className="text-muted">/ mo</small></h1>
+                        <ul className="list-unstyled mt-3 mb-4">
+                        <li>100 GB of storage</li>
+                        <li>Priority email support</li>
+                        <li>Help center access</li>
+                        </ul>
+                        <button type="button" className="btn btn-lg btn-block btn-primary">Get started</button>
+                    </div>
+                    </div>
+                    <div className="card mb-4 shadow-sm">
+                    <div className="card-header">
+                        <h4 className="my-0 font-weight-normal">Enterprise</h4>
+                    </div>
+                    <div className="card-body">
+                        <h1 className="card-title pricing-card-title">$96 <small className="text-muted">/ mo</small></h1>
+                        <ul className="list-unstyled mt-3 mb-4">
+                        <li>Unlimited storage</li>
+                        <li>Phone and email support</li>
+                        <li>Help center access</li>
+                        </ul>
+                        <button type="button" className="btn btn-lg btn-block btn-primary">Contact us</button>
+                    </div>
                     </div>
                 </div>
             </div>        
