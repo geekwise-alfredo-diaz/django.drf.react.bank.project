@@ -18,15 +18,22 @@ const authReducer = (state, action) => {
                 group: action.payload.groups[0].name
             }
         case LOGIN_SUCCESS:
-        case REGISTER_SUCCESS:
-            console.log('Logged-in user: ' + action.payload.user.groups[0].name)
             localStorage.setItem('token', action.payload.token);
+            console.log('Logged-in user: ' + action.payload.user.groups[0].name)
             return {
                 ...state,
                 ...action.payload,
                 isAuthenticated: true,
                 isLoading: false,
                 group: action.payload.user.groups[0].name
+            }
+        case REGISTER_SUCCESS:
+            localStorage.setItem('token', action.payload.token);
+            return {
+                ...state,
+                ...action.payload,
+                isAuthenticated: true,
+                isLoading: false,
             }
         case LOGIN_FAIL:
         case AUTH_ERROR:

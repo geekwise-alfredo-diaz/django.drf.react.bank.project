@@ -23,6 +23,7 @@ import TellerRoute from './navigation/TellerRoute'
 // Context Provider
 import BranchContextProvider from '../context/BranchProvider'
 import MemberContextProvider from '../context/MemberProvider'
+import StaffContextProvider from '../context/StaffProvider'
 
 // Context
 import { AuthContext } from '../context/AuthProvider'
@@ -58,7 +59,10 @@ export class AppRoutes extends Component {
                     <PrivateRoute path="/holders" component={Members}/>
                 </MemberContextProvider>
 
-                <ManagementRoute path="/admin" component={Manage}/>
+                <StaffContextProvider>
+                    <ManagementRoute path="/admin" component={Manage}/>
+                </StaffContextProvider>
+                
                 <TellerRoute path="/products" component={Products}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register}/>

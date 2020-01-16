@@ -1,13 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { register } from '../../actions/authActions';
 import { Redirect } from 'react-router-dom';
 
+// Context
 import { AuthContext } from '../../context/AuthProvider'
+
+// Auth Actions
+import { getAuthLevel, createUser } from '../../actions/authActions'
+// import { verify } from 'crypto';
 
 export class Register extends Component {
     static contextType = AuthContext
 
     state = {
+        group: [8],
         username: '',
         email: '',
         password: '',
@@ -26,24 +32,36 @@ export class Register extends Component {
         this.setState({password: passwordText.target.value});
     }
 
+    handleSelect = (selector) => {
+      let { value } = selector.target;
+      this.setState({group: [value]});
+      console.log("Selected: " + value);
+    }
+
     formSubmit = (e) => {
         e.preventDefault();
-        const {email, password, username} = this.state
+        const {email, password, username, group} = this.state
         if(username === '' || password === '') {
           this.setState({message: 'Name or password must not be empty'})
         } else {
           this.setState({message: ''})
-        const newUser = {username, email, password};
-        register(newUser, this.context.dispatch);
+        const newUser = {username, email, password, group};
+
+        if(getAuthLevel(this.context.auth) >= 2) {
+          createUser(newUser)
+        } else {
+          register(newUser, this.context.dispatch);
+        }
         this.setState({email: ''});
         this.setState({password: ''});
         this.setState({username: ''});
+        this.setState({group: [8]});
         }
     }
 
 
     render() {
-        if(this.context.auth.isAuthenticated) {
+        if(this.context.auth.isAuthenticated && ! (getAuthLevel(this.context.auth) >= 2)) {
           return <Redirect to="/"/>
         }
 
@@ -52,7 +70,8 @@ export class Register extends Component {
         return (
           <form onSubmit={this.formSubmit} style={this.FormStyle}>
             <div style={this.headerStyle} className="login-header">
-              Register
+              {getAuthLevel(this.context.auth) >= 3 ? "Create a Member/Employee" : 
+              getAuthLevel(this.context.auth) > 1 ? "Create a Member" : "Register"}
             </div>
             <div style={this.inputStyle} className="form-group">
               <label htmlFor="exampleInputEmail1">Username</label>
@@ -64,6 +83,24 @@ export class Register extends Component {
               <input onChange={this.emailInput} value={email} type="email" className="form-control"/>
               <small className="form-text text-muted">Email wont be shared</small>
             </div>
+
+            {getAuthLevel(this.context.auth) >= 3 ? (
+            <div style={this.inputStyle} className="form-group">
+              <label htmlFor="exampleFormControlSelect1">Groups</label>
+              <select defaultValue={8} onChange={this.handleSelect} className="form-control" id="exampleFormControlSelect1">
+                {getAuthLevel(this.context.auth) >= 5 ? (
+                  <Fragment>
+                    <option value={7} >Branch Admin</option>
+                    <option value={6} >Branch Staff</option>
+                  </Fragment>) : null 
+                }
+                {getAuthLevel(this.context.auth) >= 4 ? (<option value={4} >Bank Admin</option>) : null }
+                {getAuthLevel(this.context.auth) >= 3 ? (<option value={5} >Bank Staff</option>) : null }
+                <option value={8} >Member</option>
+              </select>
+            </div>
+            ): null }
+
             <div style={this.inputStyle} className="form-group">
               <label htmlFor="exampleInputPassword1">Password</label>
               <input onChange={this.passwordInput} value={password} type="password" className="form-control"/>
