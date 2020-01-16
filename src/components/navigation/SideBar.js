@@ -40,6 +40,9 @@ export class SideBar extends Component {
                         <Link style={this.linkStyle} to="/products">
                             <FaRegCreditCard size={'32px'}/>
                         </Link>
+                        <Link style={this.linkStyle} to="/register">
+                            <FaUserPlus size={'32px'}/>
+                        </Link>
                     </Fragment>
                 ) : null }
 
@@ -47,9 +50,6 @@ export class SideBar extends Component {
                     <Fragment >
                         <Link style={this.linkStyle} to="/admin">
                             <IoIosPeople size={'32px'}/> 
-                        </Link>
-                        <Link style={this.linkStyle} to="/register">
-                            <FaUserPlus size={'32px'}/>
                         </Link>
                     </Fragment>
                 ) : null }
