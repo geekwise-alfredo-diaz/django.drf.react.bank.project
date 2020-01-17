@@ -49,9 +49,14 @@ const authReducer = (state, action) => {
                 isAuthenticated: false,
                 isLoading: false,
             }
-
         default:
             return state;
+        case 'HEADER_CHANGE':
+            console.log('Changed: ' + action.payload)
+            return {
+                ...state,
+                header: action.payload,
+            }
     }
 }
 
