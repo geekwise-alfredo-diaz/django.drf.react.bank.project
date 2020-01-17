@@ -17,8 +17,9 @@ import Manage from './Manage';
 import Login from './accounts/Login';
 import Register from './accounts/Register'
 import PrivateRoute from './navigation/PrivateRoute';
-import ManagementRoute from './navigation/ManagementRoute'
-import TellerRoute from './navigation/TellerRoute'
+import ManagementRoute from './navigation/ManagementRoute';
+import TellerRoute from './navigation/TellerRoute';
+import MemberRoute from './navigation/MemberRoute';
 
 // Context Provider
 import BranchContextProvider from '../context/BranchProvider'
@@ -56,7 +57,7 @@ export class AppRoutes extends Component {
                 {/* Private Route */}
 
                 <MemberContextProvider>
-                    <PrivateRoute path="/holders" component={Members}/>
+                    <MemberRoute path="/holders" component={Members}/>
                 </MemberContextProvider>
 
                 <StaffContextProvider>

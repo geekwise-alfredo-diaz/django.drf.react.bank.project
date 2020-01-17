@@ -6,15 +6,21 @@ import Model from './Model';
 import AddItem from './AddItem';
 
 // Context
+import { AuthContext } from '../context/AuthProvider'
 import { BranchContext } from '../context/BranchProvider'
 import { getBranches, deleteBranch, updateBranch, addBranch } from '../actions/branches'
 
 export default function Branches() {
+  const authContext = useContext(AuthContext)
   const { branches, dispatch } = useContext(BranchContext);
 
     // Refresh branches when components load
     useEffect(() => {
       getBranches(dispatch);
+      authContext.dispatch({
+        type: 'HEADER_CHANGE',
+        payload: 'Branches'
+      })
     }, [])
 
     const deleteBranches = (branchId)=> {

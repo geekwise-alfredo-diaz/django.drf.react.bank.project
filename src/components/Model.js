@@ -1,6 +1,15 @@
-import React, { Component } from 'react'
+// Native Imports
+import React, { Component, Fragment } from 'react'
+
+// Context
+import { AuthContext } from '../context/AuthProvider'
+
+// Auth Actions
+import { getAuthLevel } from '../actions/authActions'
 
 export class Model extends Component {
+    static contextType = AuthContext
+
     state = {
         choice: 'Edit',
         isEditable: false,
@@ -25,6 +34,7 @@ export class Model extends Component {
     }
 
     render() {
+        const { auth } = this.context
         const {id} = this.props.item;
         return (
             <li style={this.listStyle} className="list-group-item d-flex flex-row">
@@ -35,16 +45,20 @@ export class Model extends Component {
                 </div>
                 <div className="d-flex flex-row" style={this.buttonWrapStyle}>
 
-                    <button style={this.buttonStyle} className="btn-primary" 
-                    onClick={this.toggleEdit}>
-                        {this.state.choice}
-                    </button>
+                    {getAuthLevel(auth) > 1 ? (
+                    <Fragment>
+                        <button style={this.buttonStyle} className="btn-primary" 
+                        onClick={this.toggleEdit}>
+                            {this.state.choice}
+                        </button>
 
-                    <div style={this.spaceStyle}></div>
-                    <button className="btn-danger" onClick={
-                        this.props.deleteItem.bind(this, id)}>
-                        Delete
-                    </button>
+                        <div style={this.spaceStyle}></div>
+                        <button className="btn-danger" onClick={
+                            this.props.deleteItem.bind(this, id)}>
+                            Delete
+                        </button>
+                    </Fragment>): null}
+                    
                 </div>
             </li>
         )

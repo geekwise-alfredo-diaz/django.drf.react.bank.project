@@ -1,12 +1,20 @@
+// Native Imports
 import React, { Component } from 'react';
 import axios from 'axios';
+
+// Components
 import Model from './Model';
 import AddItem from './AddItem'
+
+// Context 
+import { AuthContext } from '../context/AuthProvider'
 
 let CancelToken = axios.CancelToken;
 let cancel;
 
 export class Accounts extends Component {
+    static contextType = AuthContext
+
     state = {
         accountsList: [],
     }
@@ -42,6 +50,11 @@ export class Accounts extends Component {
 
     componentDidMount() {
         this.refreshAccounts()
+        this.context.dispatch({
+            type: 'HEADER_CHANGE',
+            payload: 'Accounts'
+        })
+        
     }
 
     componentWillUnmount() {

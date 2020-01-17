@@ -20,6 +20,13 @@ export class Register extends Component {
         message: '',
     }
 
+    componentDidMount(){
+      this.context.dispatch({
+        type: 'HEADER_CHANGE',
+        payload: 'Register'
+      })
+    }
+
     nameInput = (nameText) => {
         this.setState({username: nameText.target.value});
     }

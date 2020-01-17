@@ -13,6 +13,13 @@ export class Login extends Component {
         password: '',
     }
 
+    componentDidMount(){
+      this.context.dispatch({
+        type: 'HEADER_CHANGE',
+        payload: 'Login'
+      })
+    }
+
     emailInput = (emailText) => {
         this.setState({email: emailText.target.value});
     }

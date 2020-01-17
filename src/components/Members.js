@@ -7,17 +7,25 @@ import AddItem from './AddItem'
 
 // Context
 import { MemberContext } from '../context/MemberProvider'
+import { AuthContext } from '../context/AuthProvider'
 
 // Actions
 import { getCustomers, deleteCustomer, addCustomer, updateCustomer } from '../actions/memberActions';
+import { getAuthLevel } from '../actions/authActions'
 
 export default function Members() {
     const { members, dispatch } = useContext(MemberContext);
+    const authContext = useContext(AuthContext)
+    const { auth } = authContext
 
     // Refresh customers the moment component loads
     useEffect(() => {
       getCustomers(dispatch);
-    })
+      authContext.dispatch({
+        type: 'HEADER_CHANGE',
+        payload: 'Members',
+      })
+    }, [])
 
     const updateMember = (customerId, customerName) => {
         updateCustomer(customerId, customerName, dispatch);
@@ -46,7 +54,10 @@ export default function Members() {
 
     return (
             <div style={branchStyle}>
-                <AddItem placeholder={"Holder's name"} addItem={addMember}/>
+                {getAuthLevel(auth) > 1 ? (
+                  <AddItem placeholder={"Holder's name"} addItem={addMember}/>
+                ) : null}
+                
                 {renderCustomers()}
             </div>
     )
