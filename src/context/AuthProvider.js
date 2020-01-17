@@ -11,7 +11,8 @@ const AuthProvider = props => {
         group: null,
         isAuthenticated: null,
         isLoading: false,
-        user: null
+        user: null,
+        header: '',
     }
 
     const [auth, dispatch] = useReducer(authReducer, initialState);
