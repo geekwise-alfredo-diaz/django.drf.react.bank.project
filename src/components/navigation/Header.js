@@ -1,9 +1,15 @@
+// Native Imports
 import React from 'react'
 import { Link } from 'react-router-dom';
-import Nav from 'react-bootstrap/Nav';
-import { logout } from '../../actions/authActions';
 
+// Componenets
+import Nav from 'react-bootstrap/Nav';
+
+// Context 
 import { AuthContext } from '../../context/AuthProvider'
+
+// Actions
+import { logout } from '../../actions/authActions';
 
 
 class Header extends React.Component {
@@ -66,7 +72,7 @@ class Header extends React.Component {
       return (
         <Nav style={this.navStyle} activeKey="/">
           <Nav.Item className="col-8 col-md-9 col-lg-10">
-            <div style={this.sixStyle}>6</div>
+            <div style={this.sixStyle}>6 {' '} {this.context.auth.header}</div>
           </Nav.Item>
           { isAuthenticated ? authLinks : guestLinks }
         </Nav>

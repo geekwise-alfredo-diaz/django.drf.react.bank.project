@@ -31,8 +31,8 @@ export class SideBar extends Component {
                         <Link style={this.linkStyle} to="/branches">
                             <MdAccountBalance size={'32px'}/>
                         </Link>
-                        <Link style={this.linkStyle} to="/holders">
-                            <FaUserLock size={'32px'}/>
+                        <Link style={this.linkStyle} to="/register">
+                            <FaUserPlus size={'32px'}/>
                         </Link>
                         <Link style={this.linkStyle} to="/accounts">
                             <MdAssignmentInd size={'32px'}/>
@@ -40,11 +40,16 @@ export class SideBar extends Component {
                         <Link style={this.linkStyle} to="/products">
                             <FaRegCreditCard size={'32px'}/>
                         </Link>
-                        <Link style={this.linkStyle} to="/register">
-                            <FaUserPlus size={'32px'}/>
-                        </Link>
                     </Fragment>
                 ) : null }
+
+                {getAuthLevel(auth) === 1 ? (
+                    <Fragment>
+                        <Link style={this.linkStyle} to="/holders">
+                            <FaUserLock size={'32px'}/>
+                        </Link>
+                    </Fragment>
+                ): null}
 
                 { getAuthLevel(auth) === 3 ? (
                     <Fragment >
