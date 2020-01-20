@@ -16,7 +16,7 @@ export const tokenConfig = () => {
 
 // GET STAFF MEMBERS
 export const getStaffMembers = dispatch => {
-    axios.get('http://g-f-django-bank-app.herokuapp.com/auth/users', tokenConfig())
+    axios.get('https://g-f-django-bank-app.herokuapp.com/auth/users', tokenConfig())
     .then(res => {
         dispatch({
         type: 'GET_STAFF_MEMBERS',
