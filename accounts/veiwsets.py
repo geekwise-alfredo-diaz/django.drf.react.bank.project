@@ -1,7 +1,8 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from rest_framework.views import APIView 
 from knox.models import AuthToken
-from .serializers import User_Serializer, Register_Serializer, Login_Serializer, Certain_User_Serializer, Group_Serializer
+from .serializers import User_Serializer, Register_Serializer, Login_Serializer, Certain_User_Serializer, Group_Serializer, Password_Serializer
 from django.contrib.auth.models import User, Group
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers as serl
@@ -60,14 +61,37 @@ class Certain_User_Viewset(generics.GenericAPIView):
         queryset = serl.serialize('json', queryset)
         return HttpResponse(queryset, content_type='application/json')
 
-    # def get(self, request):
-    #     queryset = User.objects.values()
-    #     res = {key: queryset[key] for key in queryset.__dict__.keys() & {'username', 'email'}} 
-    #     return Response({"users": list(queryset)})
-
 class Group_Viewset(generics.GenericAPIView):
     serializer_class = Group_Serializer
 
     def get(self, request):
         queryset = Group.objects.values()
         return Response({"groups": list(queryset)})
+
+# Password View
+class Password_ViewSet(APIView):
+    def get_object(self, username):
+        user = generics.get_object_or_404(User, username=self.request.user.username)
+        return user
+
+    def put(self, request):
+        serializer = Password_Serializer(data=request.data)
+
+        if serializer.is_valid():
+            username = serializer.data['username']
+            user = self.get_object(username)
+            new_password = serializer.data['password']
+            is_same_as_old = user.check_password(new_password)
+
+            if is_same_as_old:
+                return Response({"Error": "Password should be different from your last password."},status=status.HTTP_400_BAD_REQUEST)
+
+            user.set_password(new_password)
+            user.save()
+
+            res = {key: user.__dict__[key] for key in user.__dict__.keys() & {'username', 'email', 'groups', 'date_joined', 'is_active', 'last_login'}} 
+
+            return Response(res)
+
+        # Returns error if user data not valid
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
