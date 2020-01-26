@@ -1,24 +1,20 @@
 // Native Imports
-import React, {useContext} from 'react'
+import React from 'react'
 import { Route, Redirect } from 'react-router-dom';
 
-// Context
-import {AuthContext} from '../../context/AuthProvider'
+// Redux
+import { connect } from 'react-redux';
 
-// Actions
-import { getAuthLevel } from '../../actions/authActions'
-
-const MemberRoute = ({component: Component, ...rest}) => {
-    const { auth } = useContext(AuthContext);
+const MemberRoute = ({component: Component, auth, ...rest}) => {
 
     return(
         <Route 
         {...rest}
         render={props => {
-            console.log('Auth: ' + getAuthLevel(auth))
+            console.log('Auth: ' + auth.authLevel)
             if(auth.isLoading) {
                 return <h2>Loading...</h2>
-            } else if(getAuthLevel(auth) !== 1) {
+            } else if(auth.authLevel !== 1) {
                 return <Redirect to="/login" />
             } else {
                 return <Component {...props}/>
@@ -28,4 +24,8 @@ const MemberRoute = ({component: Component, ...rest}) => {
     )
 }
 
-export default MemberRoute;
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps)(MemberRoute);

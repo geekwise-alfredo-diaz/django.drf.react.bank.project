@@ -9,21 +9,39 @@ import AppRoutes from './components/AppRoutes'
 // Context
 import AuthContextProvider from './context/AuthProvider'
 
+// React - Redux
+import { Provider } from 'react-redux';
+
+// Redux Store
+import store from "./store";
+
+// Actions 
+import { loadUser } from './actions/auth'
+
+
+
 
 class App extends Component {
+  componentDidMount() {
+    store.dispatch(loadUser());
+
+
+  }
 
   render() {
     return (
       // Provides context for auth
-      <AuthContextProvider>
-        <Router>
+      <Provider store={store}>
+        <AuthContextProvider>
+          <Router>
 
-          <Header />
+            <Header />
 
-          <AppRoutes />
+            <AppRoutes />
 
-        </Router>
-      </AuthContextProvider>
+          </Router>
+        </AuthContextProvider>
+      </Provider>
     );
   }
 }

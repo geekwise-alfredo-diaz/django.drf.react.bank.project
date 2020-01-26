@@ -1,57 +1,78 @@
 // Modules
-import React, { useContext, useEffect } from 'react';
+import React, { Component, Fragment } from 'react';
 
 // Components
 import Model from './Model';
 import AddItem from './AddItem';
+import Loading from './common/Loading'
 
-// Context
-import { AuthContext } from '../context/AuthProvider'
-import { BranchContext } from '../context/BranchProvider'
+// Actions
+import { headerChange } from '../actions/auth'
 import { getBranches, deleteBranch, updateBranch, addBranch } from '../actions/branches'
 
-export default function Branches() {
-  const authContext = useContext(AuthContext)
-  const { branches, dispatch } = useContext(BranchContext);
+// Redux
+import { connect } from 'react-redux'
 
-    // Refresh branches when components load
-    useEffect(() => {
-      getBranches(dispatch);
-      authContext.dispatch({
-        type: 'HEADER_CHANGE',
-        payload: 'Branches'
-      })
-    }, [])
+class Branches extends Component {
 
-    const deleteBranches = (branchId)=> {
-      deleteBranch(branchId, dispatch)
+    // Gets Branches When Component Loads 
+    componentDidMount(){
+      console.log(this.props)
+      this.props.getBranches();
+      this.props.headerChange('Branches');
     }
 
-    const updateBranches = (branchId, branchName) => {
-      updateBranch(branchId, branchName, dispatch);
+    deleteBranches = (branchId)=> {
+      this.props.deleteBranch(branchId)
     }
 
-    const addBranches = (submitText)=> {
-      addBranch(submitText, dispatch);
+    updateBranches = (branchId, branchName) => {
+      this.props.updateBranch(branchId, branchName);
+    }
+
+    addBranches = (submitText) => {
+      this.props.addBranch(submitText);
     } 
     
 
-    const renderBranches = () => {
-      return branches.map(account => (
-          <Model deleteItem={deleteBranches} editItem={updateBranches}
-          key={account.id} item={account}/>
-      ));
+    renderBranches = () => {
+      let branches = this.props.branches;
+
+      // If statement needed to render time bug atm
+      if(branches.length > 1) {
+        return (
+          <Fragment>
+            <AddItem addItem={this.addBranches} placeholder={'Branch name'}/>
+            {branches.map(branch => (
+              <Model deleteItem={this.deleteBranches} editItem={this.updateBranches}
+              key={branch.id} item={branch}/>
+            ))}
+          </Fragment>);
+      } else {
+          return (
+            <Loading />
+          )
+      }
+      
     };
 
-    const branchStyle = {
+    branchStyle = {
       width: '100%',
       marginTop: '55px',
     }
 
-    return (
-      <div style={branchStyle}>
-        <AddItem addItem={addBranches} placeholder={'Branch name'}/>
-        {renderBranches()}
-      </div>
-      )
+    render() {
+      return (
+        <div style={this.branchStyle}>
+          {this.renderBranches()}
+        </div>
+        )
+    }
 }
+
+const mapStateToProps = state => ({
+  branches: state.branches,
+})
+
+export default connect(mapStateToProps, 
+  { getBranches, deleteBranch, updateBranch, addBranch, headerChange })(Branches);

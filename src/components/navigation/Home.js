@@ -2,14 +2,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-// Context
-import { AuthContext } from '../../context/AuthProvider'
+// Redux
+import { connect } from 'react-redux'
 
-// import sixdegreece from '../../sixdegreece.jpg'
+// Actions
+import { headerChange } from '../../actions/auth'
 
 export class Home extends Component {
-    static contextType = AuthContext
-
     imgStyle = {
         width: '100%',
         dispaly: 'block',
@@ -27,10 +26,8 @@ export class Home extends Component {
     }
 
     componentDidMount(){
-        this.context.dispatch({
-            type:'HEADER_CHANGE',
-            payload: 'Home',
-        })
+        this.props.headerChange('Home');
+        // this.props.auth.isAuthenticated ? getAuthLevel(this.props.auth) : null;
     }
 
     render() {
@@ -39,8 +36,8 @@ export class Home extends Component {
 
                 <section style={this.sectionStyle} className="text-center">
                     <div className="container">
-                        <h1 className="jumbotron-heading">Six Degrees</h1>
-                        <p className="lead text-muted">Six Degrees is a Member Relationship Management solution made exclusively for credit unions.</p>
+                        <h1 className="jumbotron-heading">TBD</h1>
+                        <p className="lead text-muted">TBD is a Member Relationship Management solution made exclusively for credit unions.</p>
                         <p style={this.pStyle}>
                         <Link to="/" className="btn btn-primary my-2">Get Started</Link>
                         <Link to="/" className="btn btn-secondary my-2">Know More</Link>
@@ -78,9 +75,13 @@ export class Home extends Component {
                     </div>
                     </div>
                 </div>
-            </div>        
-    )
+            </div> 
+        )
     }
 }
 
-export default Home
+const mapStateToProps = state => ({
+    auth: state.auth
+  })
+  
+export default connect(mapStateToProps, { headerChange })(Home);

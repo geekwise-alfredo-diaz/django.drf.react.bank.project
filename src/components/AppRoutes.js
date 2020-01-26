@@ -19,26 +19,26 @@ import Register from './accounts/Register'
 import PrivateRoute from './navigation/PrivateRoute';
 import ManagementRoute from './navigation/ManagementRoute';
 import TellerRoute from './navigation/TellerRoute';
-import MemberRoute from './navigation/MemberRoute';
+// import MemberRoute from './navigation/MemberRoute';
 
 // Context Provider
-import BranchContextProvider from '../context/BranchProvider'
+// import BranchContextProvider from '../context/BranchProvider'
 import MemberContextProvider from '../context/MemberProvider'
 import StaffContextProvider from '../context/StaffProvider'
 
 // Context
-import { AuthContext } from '../context/AuthProvider'
+// import { AuthContext } from '../context/AuthProvider'
 
-// Actions
-import {loadUser} from '../actions/authActions'
+// Redux
+import { connect } from 'react-redux'
+// import {loadUser} from '../actions/authActions'
+// import App from "../App";
 
 export class AppRoutes extends Component {
-    static contextType = AuthContext
 
-    componentDidMount(){
-        const {dispatch} = this.context;
-        loadUser(dispatch)
-    }
+    // componentDidMount(){
+    //     loadUser()
+    // }
 
 
     render() {
@@ -49,15 +49,13 @@ export class AppRoutes extends Component {
                 <Route exact path="/" component={Home}/>
 
                 {/*Branches*/}
-                <BranchContextProvider>
-                    <TellerRoute path="/branches" component={Branches}/>
-                </BranchContextProvider>
+                <TellerRoute path="/branches" component={Branches}/>
 
                 <TellerRoute path="/accounts" component={Accounts}/>
                 {/* Private Route */}
 
                 <MemberContextProvider>
-                    <MemberRoute path="/holders" component={Members}/>
+                    <PrivateRoute path="/holders" component={Members}/>
                 </MemberContextProvider>
 
                 <StaffContextProvider>
@@ -72,4 +70,8 @@ export class AppRoutes extends Component {
     }
 }
 
-export default AppRoutes
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+  
+export default connect(mapStateToProps)(AppRoutes);

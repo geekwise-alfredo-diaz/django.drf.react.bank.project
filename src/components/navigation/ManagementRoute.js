@@ -1,15 +1,17 @@
 // Native Imports
-import React, {useContext} from 'react'
+import React from 'react'
 import { Route, Redirect } from 'react-router-dom';
 
 // Context
-import {AuthContext} from '../../context/AuthProvider'
+// import {AuthContext} from '../../context/AuthProvider'
 
 // Actions
-import { getAuthLevel } from '../../actions/authActions'
+// import { getAuthLevel } from '../../actions/authActions'
 
-const ManagementRoute = ({component: Component, ...rest}) => {
-    const { auth } = useContext(AuthContext);
+// Redux
+import { connect } from 'react-redux'
+
+const ManagementRoute = ({component: Component, auth, ...rest}) => {
 
     return(
         <Route 
@@ -17,7 +19,7 @@ const ManagementRoute = ({component: Component, ...rest}) => {
         render={props => {
             if(auth.isLoading) {
                 return <h2>Loading...</h2>
-            } else if(getAuthLevel(auth) !== 3) {
+            } else if(auth.authLevel !== 3) {
                 return <Redirect to="/login" />
             } else {
                 return <Component {...props}/>
@@ -27,4 +29,8 @@ const ManagementRoute = ({component: Component, ...rest}) => {
     )
 }
 
-export default ManagementRoute;
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps)(ManagementRoute);

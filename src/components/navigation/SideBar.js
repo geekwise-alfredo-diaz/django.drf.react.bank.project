@@ -11,22 +11,18 @@ import { FaRegCreditCard } from 'react-icons/fa';
 import { IoIosPeople } from 'react-icons/io'
 import { FaUserPlus } from 'react-icons/fa'
 
-// Context
-import { AuthContext } from '../../context/AuthProvider'
-
-// Auth Actions
-import { getAuthLevel } from '../../actions/authActions'
+// Redux
+import { connect } from 'react-redux'
 
 export class SideBar extends Component {
-    static contextType = AuthContext
 
     render() {
-        const { auth } = this.context
+        const { auth } = this.props
         const { isAuthenticated } = auth
 
         const links = (
             <Fragment>
-                { getAuthLevel(auth) >= 2 ? (
+                { auth.authLevel >= 2 ? (
                     <Fragment>
                         <Link style={this.linkStyle} to="/branches">
                             <MdAccountBalance size={'32px'}/>
@@ -43,7 +39,7 @@ export class SideBar extends Component {
                     </Fragment>
                 ) : null }
 
-                {getAuthLevel(auth) === 1 ? (
+                {auth.authLevel === 1 ? (
                     <Fragment>
                         <Link style={this.linkStyle} to="/holders">
                             <FaUserLock size={'32px'}/>
@@ -51,7 +47,7 @@ export class SideBar extends Component {
                     </Fragment>
                 ): null}
 
-                { getAuthLevel(auth) === 3 ? (
+                { auth.authLevel === 3 ? (
                     <Fragment >
                         <Link style={this.linkStyle} to="/admin">
                             <IoIosPeople size={'32px'}/> 
@@ -110,4 +106,8 @@ export class SideBar extends Component {
     }
 }
 
-export default SideBar
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps)(SideBar)

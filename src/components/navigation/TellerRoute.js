@@ -1,15 +1,12 @@
 // Native Imports
-import React, {useContext} from 'react'
+import React from 'react'
 import { Route, Redirect } from 'react-router-dom';
 
-// Context
-import {AuthContext} from '../../context/AuthProvider'
+// Redux
+import { connect } from 'react-redux'
 
-// Actions
-import { getAuthLevel } from '../../actions/authActions'
-
-const TellerRoute = ({component: Component, ...rest}) => {
-    const { auth } = useContext(AuthContext);
+const TellerRoute = ({component: Component, auth, ...rest}) => {
+    // const { auth } = useContext(AuthContext);
 
     return(
         <Route 
@@ -17,7 +14,7 @@ const TellerRoute = ({component: Component, ...rest}) => {
         render={props => {
             if(auth.isLoading) {
                 return <h2>Loading...</h2>
-            } else if(getAuthLevel(auth) < 2) {
+            } else if(auth.authLevel < 2) {
                 return <Redirect to="/login" />
             } else {
                 return <Component {...props}/>
@@ -27,4 +24,8 @@ const TellerRoute = ({component: Component, ...rest}) => {
     )
 }
 
-export default TellerRoute;
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps)(TellerRoute);

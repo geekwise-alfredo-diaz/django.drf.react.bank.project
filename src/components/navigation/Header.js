@@ -9,7 +9,16 @@ import Nav from 'react-bootstrap/Nav';
 import { AuthContext } from '../../context/AuthProvider'
 
 // Actions
-import { logout } from '../../actions/authActions';
+// import { logout } from '../../actions/authActions';
+
+// Logo
+import tbd from '../../tbd_min.png'
+
+// Redux
+import { connect } from 'react-redux';
+
+import { logout } from '../../actions/auth'
+
 
 
 class Header extends React.Component {
@@ -41,15 +50,21 @@ class Header extends React.Component {
     sixStyle = {
       fontSize: '28px',
       marginTop: '-7px',
+      color: 'rgb(38, 32, 20)',
     }
 
+    imgStyle = {
+      width: '40px',
+      marginLeft: '-15px',
+    }
+    
     logoutUser = () => {
-      logout(this.context.dispatch)
+      this.props.logout()
     }
 
     render() {
       console.log('Context: ' + Object.keys(this.context))
-      const { isAuthenticated, user } = this.context.auth;
+      const { isAuthenticated, user } = this.props.auth;
 
       const authLinks = (
         <Nav.Item style={this.rightHStyle} className="col-4 col-md-3 col-lg-2">
@@ -72,7 +87,10 @@ class Header extends React.Component {
       return (
         <Nav style={this.navStyle} activeKey="/">
           <Nav.Item className="col-8 col-md-9 col-lg-10">
-            <div style={this.sixStyle}>6 {' '} {this.context.auth.header}</div>
+            <div style={this.sixStyle}>
+              <img alt='logo' style={this.imgStyle} src={tbd}></img>
+              {this.props.auth.header}
+            </div>
           </Nav.Item>
           { isAuthenticated ? authLinks : guestLinks }
         </Nav>
@@ -80,4 +98,8 @@ class Header extends React.Component {
     }
 }
 
-export default Header
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, { logout })(Header);

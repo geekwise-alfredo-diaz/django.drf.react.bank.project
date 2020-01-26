@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
-import { login } from '../../actions/authActions';
+// import { login } from '../../actions/authActions';
 import { Redirect } from 'react-router-dom';
 
-import {AuthContext} from '../../context/AuthProvider'
+// import {AuthContext} from '../../context/AuthProvider'
+
+// Actions 
+import { login, headerChange } from '../../actions/auth'
+
+// Redux
+import { connect } from 'react-redux'
 
 export class Login extends Component {
 
-    static contextType = AuthContext
+    // static contextType = AuthContext
 
     state = {
         email: '',
@@ -14,10 +20,7 @@ export class Login extends Component {
     }
 
     componentDidMount(){
-      this.context.dispatch({
-        type: 'HEADER_CHANGE',
-        payload: 'Login'
-      })
+      this.props.headerChange('Login')
     }
 
     emailInput = (emailText) => {
@@ -31,15 +34,15 @@ export class Login extends Component {
     formSubmit = (e) => {
         e.preventDefault();
         console.log('Creds: ' + this.state.email + ' ' + this.state.password)
-        login(this.state.email, this.state.password, this.context.dispatch);
+        this.props.login(this.state.email, this.state.password);
         this.setState({email: ''});
         this.setState({password: ''});
     }
 
 
     render() {
-        console.log('Render: ' + this.context.auth.isAuthenticated)
-        if(this.context.auth.isAuthenticated) {
+        console.log('Render: ' + this.props.auth.isAuthenticated)
+        if(this.props.auth.isAuthenticated) {
           return <Redirect to="/" />
         }
 
@@ -88,4 +91,8 @@ export class Login extends Component {
     }
 }
 
-export default Login 
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, { login, headerChange })(Login);

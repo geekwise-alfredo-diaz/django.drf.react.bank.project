@@ -1,13 +1,18 @@
 import React, { Component, Fragment } from 'react';
-import { register } from '../../actions/authActions';
+// import { register } from '../../actions/authActions';
 import { Redirect } from 'react-router-dom';
 
 // Context
 import { AuthContext } from '../../context/AuthProvider'
 
 // Auth Actions
-import { getAuthLevel, createUser } from '../../actions/authActions'
+// import { getAuthLevel, createUser } from  '../../actions/authActions'
+import { register, headerChange } from '../../actions/auth'
 // import { verify } from 'crypto';
+
+// Redux 
+import { connect } from 'react-redux'
+
 
 export class Register extends Component {
     static contextType = AuthContext
@@ -21,10 +26,7 @@ export class Register extends Component {
     }
 
     componentDidMount(){
-      this.context.dispatch({
-        type: 'HEADER_CHANGE',
-        payload: 'Register'
-      })
+      this.props.headerChange('Register')
     }
 
     nameInput = (nameText) => {
@@ -53,11 +55,12 @@ export class Register extends Component {
         } else {
           this.setState({message: ''})
         const newUser = {username, email, password, group};
+        console.log(newUser);
 
-        if(getAuthLevel(this.context.auth) >= 2) {
-          createUser(newUser)
+        if(this.props.auth.authLevel >= 2) {
+          this.props.register(newUser)
         } else {
-          register(newUser, this.context.dispatch);
+          this.props.register(newUser);
         }
         this.setState({email: ''});
         this.setState({password: ''});
@@ -68,7 +71,7 @@ export class Register extends Component {
 
 
     render() {
-        if(this.context.auth.isAuthenticated && ! (getAuthLevel(this.context.auth) >= 2)) {
+        if(this.props.auth.isAuthenticated && ! (this.props.auth.authLevel >= 2)) {
           return <Redirect to="/"/>
         }
 
@@ -77,8 +80,8 @@ export class Register extends Component {
         return (
           <form onSubmit={this.formSubmit} style={this.FormStyle}>
             <div style={this.headerStyle} className="login-header">
-              {getAuthLevel(this.context.auth) >= 3 ? "Create a Member/Employee" : 
-              getAuthLevel(this.context.auth) > 1 ? "Create a Member" : "Register"}
+              {this.props.auth.authLevel >= 3 ? "Create a Member/Employee" : 
+              this.props.auth.authLevel > 1 ? "Create a Member" : "Register"}
             </div>
             <div style={this.inputStyle} className="form-group">
               <label htmlFor="exampleInputEmail1">Username</label>
@@ -91,18 +94,18 @@ export class Register extends Component {
               <small className="form-text text-muted">Email wont be shared</small>
             </div>
 
-            {getAuthLevel(this.context.auth) >= 3 ? (
+            {this.props.auth.authLevel >= 3 ? (
             <div style={this.inputStyle} className="form-group">
               <label htmlFor="exampleFormControlSelect1">Groups</label>
               <select defaultValue={8} onChange={this.handleSelect} className="form-control" id="exampleFormControlSelect1">
-                {getAuthLevel(this.context.auth) >= 5 ? (
+                {this.props.auth.authLevel >= 5 ? (
                   <Fragment>
                     <option value={7} >Branch Admin</option>
                     <option value={6} >Branch Staff</option>
                   </Fragment>) : null 
                 }
-                {getAuthLevel(this.context.auth) >= 4 ? (<option value={4} >Bank Admin</option>) : null }
-                {getAuthLevel(this.context.auth) >= 3 ? (<option value={5} >Bank Staff</option>) : null }
+                {this.props.auth.authLevel >= 4 ? (<option value={4} >Bank Admin</option>) : null }
+                {this.props.auth.authLevel >= 3 ? (<option value={5} >Bank Staff</option>) : null }
                 <option value={8} >Member</option>
               </select>
             </div>
@@ -141,4 +144,8 @@ export class Register extends Component {
     }
 }
 
-export default Register
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, { register, headerChange })(Register);
