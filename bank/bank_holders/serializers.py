@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Branch, Account, Customer, Product
+from .models import Branch, Account, Member, Product
 
 class Branch_Serializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -8,13 +8,13 @@ class Branch_Serializer(serializers.HyperlinkedModelSerializer):
 
 class Account_Serializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        fields = ['id','name']
+        fields = ['id', 'name']
         model = Account
 
-class Customer_Serializer(serializers.HyperlinkedModelSerializer):
+class Member_Serializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         fields = ['id','name']
-        model = Customer
+        model = Member
 
 class Product_Serializer(serializers.HyperlinkedModelSerializer):
     class Meta:
