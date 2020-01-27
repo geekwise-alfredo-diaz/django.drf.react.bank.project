@@ -8,7 +8,7 @@ class Branch(models.Model):
     def __str__(self):
         return f"{self.name}: {self.location}"
 
-class Customer(models.Model):
+class Member(models.Model):
     name = models.CharField(max_length=30)
     email = models.EmailField(max_length=300, default='domain@setup.com')
     customer = models.ForeignKey(User,
@@ -22,11 +22,16 @@ class Customer(models.Model):
 class Account(models.Model):
     name = models.CharField(max_length=30)
     balance = models.DecimalField(max_digits=100, decimal_places=2, default=0)
-    holder = models.OneToOneField(
-        Customer,
-        on_delete=models.CASCADE,
-        null=True,
+    # holder = models.OneToOneField(
+    #     Member,
+    #     on_delete=models.CASCADE,
+    #     null=True,
+    # )
+    holder = models.ForeignKey(User,
+    related_name='holders', on_delete=models.CASCADE,
+    null=True,
     )
+
 
     def __str__(self):
         return f"{self.name}: {self.holder}"
