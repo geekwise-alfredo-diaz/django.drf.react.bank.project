@@ -51,7 +51,7 @@ export class AppRoutes extends Component {
                 {/*Branches*/}
                 <TellerRoute path="/branches" component={Branches}/>
 
-                <TellerRoute path="/accounts" component={Accounts}/>
+                <PrivateRoute path="/accounts" component={Accounts}/>
                 {/* Private Route */}
 
                 <MemberContextProvider>

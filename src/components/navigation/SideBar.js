@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom'
 // Icons
 import { MdAccountBalance } from 'react-icons/md';
 import { FaHome } from 'react-icons/fa';
-import { FaUserLock } from 'react-icons/fa';
+// import { FaUserLock } from 'react-icons/fa';
 import { MdAssignmentInd } from 'react-icons/md';
 import { FaRegCreditCard } from 'react-icons/fa';
 import { IoIosPeople } from 'react-icons/io'
@@ -30,9 +30,6 @@ export class SideBar extends Component {
                         <Link style={this.linkStyle} to="/register">
                             <FaUserPlus size={'32px'}/>
                         </Link>
-                        <Link style={this.linkStyle} to="/accounts">
-                            <MdAssignmentInd size={'32px'}/>
-                        </Link>
                         <Link style={this.linkStyle} to="/products">
                             <FaRegCreditCard size={'32px'}/>
                         </Link>
@@ -41,9 +38,12 @@ export class SideBar extends Component {
 
                 {auth.authLevel === 1 ? (
                     <Fragment>
-                        <Link style={this.linkStyle} to="/holders">
-                            <FaUserLock size={'32px'}/>
+                        <Link style={this.linkStyle} to="/accounts">
+                            <MdAssignmentInd size={'32px'}/>
                         </Link>
+                        {/* <Link style={this.linkStyle} to="/holders">
+                            <FaUserLock size={'32px'}/>
+                        </Link> */}
                     </Fragment>
                 ): null}
 

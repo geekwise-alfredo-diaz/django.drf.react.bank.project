@@ -1,86 +1,51 @@
 // Native Imports
 import React, { Component } from 'react';
-import axios from 'axios';
 
 // Components
 import Model from './Model';
 import AddItem from './AddItem'
+import Loading from './common/Loading'
 
-// Context 
-import { AuthContext } from '../context/AuthProvider'
+// Redux
+import { connect } from 'react-redux'
 
-let CancelToken = axios.CancelToken;
-let cancel;
+// Actions
+import { addAccount, refreshAccounts, deleteAccount } from '../actions/accounts'
 
 export class Accounts extends Component {
-    static contextType = AuthContext
-
     state = {
         accountsList: [],
     }
 
-    deleteAccount = (accountId)=> {
-        // console.log(acc)
-        axios.delete(`https://g-f-django-bank-app.herokuapp.com/accounts/${accountId}/`)
-        .then(res => this.setState({accountsList: this.state.accountsList.filter(
-            account => account.id !== accountId
-        )}))
-    }
-    
-    addAccount = (submitText)=> {
-        axios.post('https://g-f-django-bank-app.herokuapp.com/accounts/',
-        {
-            name: submitText
-        }).then(res => this.setState(
-            {accountsList: [res.data, ...this.state.accountsList]}
-        )).catch(err => console.log(err));
-    }
-
-    updateAccount = (accountId, accountName) => {
-        let body = {
-          id: accountId,
-          name: accountName
-      }
-
-      axios.put(`https://g-f-django-bank-app.herokuapp.com/accounts/${accountId}/`, body)
-      .then(res => {
-          this.refreshAccounts();
-      }).catch(err => console.log(err));
-    }
-
     componentDidMount() {
-        this.refreshAccounts()
-        this.context.dispatch({
-            type: 'HEADER_CHANGE',
-            payload: 'Accounts'
-        })
-        
+        this.props.refreshAccounts()
     }
 
-    componentWillUnmount() {
-        cancel();
+    deleteAccount = () => {
+        return '';
     }
 
+    updateAccount = () => {
+        return '';
+    }
 
-    refreshAccounts = () => {
-        let cancelToken = new CancelToken(function executor(c) {
-            cancel = c;
-          })
-        axios.get('https://g-f-django-bank-app.herokuapp.com/accounts/', {
-            cancelToken: cancelToken
-        })
-        .then(res => {this.setState({accountsList: res.data})
-        })
-        .catch(err => console.log(err))
+    addAccount = () => {
+        return '';
     }
 
     renderAccounts = () => {
-        let accountsList = this.state.accountsList
+        let accountsList = this.props.accounts
+
+        if(accountsList.length > 1) {
+            return accountsList.map(account => (
+                <Model deleteItem={this.deleteAccount} editItem={this.updateAccount}
+                key={account.id} item={account}/>
+            )); 
+        } else {
+            return <Loading />
+        }
         
-        return accountsList.map(account => (
-            <Model deleteItem={this.deleteAccount} editItem={this.updateAccount}
-            key={account.id} item={account}/>
-        ));
+
     };
 
     branchStyle = {
@@ -104,4 +69,8 @@ export class Accounts extends Component {
     }
 }
 
-export default Accounts
+const mapStateToProps = state => ({
+    accounts: state.accounts
+})
+
+export default connect(mapStateToProps, { addAccount, refreshAccounts, deleteAccount })(Accounts)
