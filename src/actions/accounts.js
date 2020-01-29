@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { tokenConfig } from './auth'
 
 export const deleteAccount = (accountId) => dispatch => {
     axios.delete(`https://g-f-django-bank-app.herokuapp.com/accounts/${accountId}/`)
@@ -25,7 +26,7 @@ export const updateAccount = (accountId, accountName) => dispatch => {
 }
 
 export const refreshAccounts = () => dispatch => {
-    axios.get('https://g-f-django-bank-app.herokuapp.com/accounts/')
+    axios.get('https://g-f-django-bank-app.herokuapp.com/accounts/', tokenConfig())
     .then(res => 
         dispatch({
             type: 'RENDER_ACCOUNTS',
